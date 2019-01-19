@@ -20,6 +20,7 @@ import NoteAdd from '@material-ui/icons/NoteAdd';
 import Settings from '@material-ui/icons/Settings';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom';
+import LoginButton from './LoginButton';
 
 const styles = {
   root: {
@@ -102,58 +103,17 @@ class MenuAppBar extends React.Component {
     return (
         <div className={classes.root}>
             <AppBar position="static">
-            <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.title}>
-                Arena Data
-            </Typography>
+                <Toolbar>
+                    <Typography variant="h6" color="inherit" className={classes.title}>
+                        Arena Data
+                    </Typography>
                     <Tabs value={value} onChange={this.handleTabChange} className={classes.tabs}>
+                        <Tab label="Overview" component={Link} to="/dashboard" />
                         <Tab label="2v2" component={Link} to="/2v2" />
                         <Tab label="3v3" component={Link} to="/3v3" />
                         <Tab label="RBG" component={Link} to="/RBG" />
                     </Tabs>
-                    {auth ? (
-                        <div>
-                            <IconButton
-                                aria-owns={open ? 'menu-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={open}
-                                onClose={this.handleClose}
-                            >
-                                <MenuItem onClick={this.handleClose}><Settings /> &nbsp; Account Settings</MenuItem>
-                                <MenuItem onClick={this.handleClose} component={Link} to="/import"><NoteAdd /> &nbsp; Import CSV</MenuItem>
-                                <MenuItem onClick={this.handleLogout}><ExitToApp /> &nbsp; Log Out</MenuItem>
-                            </Menu>
-                        </div>
-                    ) :
-                    (
-                        <div>
-                            <IconButton
-                                aria-owns={open ? 'menu-appbar' : undefined}
-                                aria-haspopup="true"
-                                color="inherit"
-                            >
-                                <Typography variant="subtitle1" color="inherit" className={classes.grow} onClick={this.handleLogin}>
-                                    Login
-                                </Typography>
-                            </IconButton>
-                        </div>
-                    )}
+                    <LoginButton />
                 </Toolbar>
             </AppBar>
         </div>
