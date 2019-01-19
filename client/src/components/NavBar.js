@@ -19,6 +19,7 @@ import Tab from '@material-ui/core/Tab';
 import NoteAdd from '@material-ui/icons/NoteAdd';
 import Settings from '@material-ui/icons/Settings';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import { Link } from 'react-router-dom';
 
 const styles = {
   root: {
@@ -106,9 +107,9 @@ class MenuAppBar extends React.Component {
                 Arena Data
             </Typography>
                     <Tabs value={value} onChange={this.handleTabChange} className={classes.tabs}>
-                        <Tab label="2v2" />
-                        <Tab label="3v3" />
-                        <Tab label="RBG" />
+                        <Tab label="2v2" component={Link} to="/2v2" />
+                        <Tab label="3v3" component={Link} to="/3v3" />
+                        <Tab label="RBG" component={Link} to="/RBG" />
                     </Tabs>
                     {auth ? (
                         <div>
@@ -135,7 +136,7 @@ class MenuAppBar extends React.Component {
                                 onClose={this.handleClose}
                             >
                                 <MenuItem onClick={this.handleClose}><Settings /> &nbsp; Account Settings</MenuItem>
-                                <MenuItem onClick={this.handleClose}><NoteAdd /> &nbsp; Import CSV</MenuItem>
+                                <MenuItem onClick={this.handleClose} component={Link} to="/import"><NoteAdd /> &nbsp; Import CSV</MenuItem>
                                 <MenuItem onClick={this.handleLogout}><ExitToApp /> &nbsp; Log Out</MenuItem>
                             </Menu>
                         </div>
