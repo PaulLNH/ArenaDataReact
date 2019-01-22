@@ -1,87 +1,145 @@
-// import React from 'react';
-
-// const Match = ({ match }) => {
-//     return (
-//         <li>
-//             {match.Timestamp}
-//         </li>
-//     );
-// };
-
-// export default Match;
-
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Moment from 'moment';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+
+/** Importing spec images */
+import MAGEArcane from '../assets/images/specs/spec_62.jpg';
+import MAGEFire from '../assets/images/specs/spec_63.jpg';
+import MAGEFrost from '../assets/images/specs/spec_64.jpg';
+import { NavigateBeforeSharp } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    flexGrow: 1,
+    // height: '100%',
   },
-  table: {
-    minWidth: 700,
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    // flexBasis: '33.33%',
+    // flexShrink: 0,
+    // borderRight: '0.1em solid gray', 
+    // padding: '1em',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  victory: {
+      color: 'green',
+      fontWeight: 'bolder',
+      align: 'center',
+      marginLeft: '1em',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  defeat: {
+    color: 'red',
+    fontWeight: 'bolder',
+    align: 'center',
+    marginLeft: '1em',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
+class Match extends React.Component {
+  state = {
+    expanded: null,
+  };
+
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
+
+  displayTeamComp = team => {
+      // Data passed into function
+      // MAGE-Frost,PRIEST-Discipline,ROGUE-Assassination
+      let teamArr = team.split(',');
+      let playerClass = [];
+      let playerSpec = [];
+      let result = [];
+      
+      for (let player of teamArr) {
+        playerClass.push(teamArr[player].slice('-')[0]);
+        playerSpec.push(teamArr[player].slice('-')[1]);
+        result.push(<img src={`${playerSpec[player]}${playerClass[player]}`} />)
+      };
+
+    // should return <img src={MAGEFrost} /><img src={PRIESTDiscipline} /><img src={ROGUEAssassination} />
+    return result
+  };
+
+  render() {
+    const { match } = this.props;
+    const { classes } = this.props;
+    const { expanded } = this.state;
+
+    return (
+      <div className={classes.root}>
+        <ExpansionPanel expanded={expanded === match.Timestamp} onChange={this.handleChange(match.Timestamp)}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography className={classes.heading}>
+                {Moment.unix(match.Timestamp).format("HH:mm A")}
+                    <br />
+                {Moment.unix(match.Timestamp).format("ddd YYYY-MM-DD")}
+            </Typography>
+
+            <Grid container spacing={16}>
+                <Grid item xs={2} sm={2} md={2}>
+                    {match.Victory === 'true' ? 
+                        <Typography className={classes.victory}>Victory!</Typography> : 
+                        <Typography className={classes.defeat}>Defeat!</Typography>
+                    }
+                </Grid>
+                <Grid item xs={8} sm={8} md={8}>
+                    <Typography className={classes.secondaryHeading}>
+                        {match.TeamComposition} VS {match.EnemyComposition}
+                    </Typography>
+                </Grid>
+                <Grid item xs={1} sm={1} md={1}>
+                    {this.displayTeamComp(match.TeamComposition)}
+                </Grid>
+            </Grid>
+
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+          <Typography>
+              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+              maximus est, id dignissim quam.
+            </Typography>
+            <Divider />
+            <Typography>
+              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+              maximus est, id dignissim quam.
+            </Typography>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </div>
+    );
+  }
 }
 
-
-const rows = [
-  createData('Time of Match', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-function SimpleTable(props) {
-  const { classes, match } = props;
-
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat (g)</TableCell>
-            <TableCell align="right">Carbs (g)</TableCell>
-            <TableCell align="right">Protein (g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-  );
-}
-
-SimpleTable.propTypes = {
+Match.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(Match);

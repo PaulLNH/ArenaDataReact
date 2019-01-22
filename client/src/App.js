@@ -10,17 +10,17 @@ import Dashboard from './pages/Dashboard';
 import RBG from './pages/RBG';
 import Import from './pages/Import';
 import { withStyles } from '@material-ui/core/styles';
-
 import { CssBaseline } from '@material-ui/core';
-    
+
 const styles = theme => ({
     main: {
-    padding: 3 * theme.spacing.unit,
-    [theme.breakpoints.down('xs')]: {
-        padding: 2 * theme.spacing.unit,
-    },
+        padding: 3 * theme.spacing.unit,
+        [theme.breakpoints.down('xs')]: {
+            padding: 2 * theme.spacing.unit,
+        },
     },
 });
+
 
 const App = ({ classes }) => (
     <Fragment>
