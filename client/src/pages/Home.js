@@ -69,6 +69,7 @@ class Home extends Component {
                     this.state.data.map(match => (
                         <Match 
                             key={match.Timestamp} 
+                            id={match.Timestamp}
                             match={match}
                         />
                     ))
