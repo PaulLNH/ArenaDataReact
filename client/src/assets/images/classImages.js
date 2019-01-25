@@ -34,8 +34,8 @@ import DEATHKNIGHTUnholy from '../images/specs/spec_252.jpg';
 /**
  * @Class Hunter
  */
-import HUNTERBeastmaster from '../images/specs/spec_253.jpg';
-import HUNTERMarksman from '../images/specs/spec_254.jpg';
+import HUNTERBeast_Mastery from '../images/specs/spec_253.jpg';
+import HUNTERMarksmanship from '../images/specs/spec_254.jpg';
 import HUNTERSurvival from '../images/specs/spec_255.jpg';
 /**
  * @Class Priest
@@ -90,8 +90,8 @@ const classImages = {
     DEATHKNIGHTBlood,
     DEATHKNIGHTFrost,
     DEATHKNIGHTUnholy,
-    HUNTERBeastmaster,
-    HUNTERMarksman,
+    HUNTERBeast_Mastery,
+    HUNTERMarksmanship,
     HUNTERSurvival,
     PRIESTDiscipline,
     PRIESTHoly,

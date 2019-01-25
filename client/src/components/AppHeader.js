@@ -56,9 +56,7 @@ class AppHeader extends React.Component {
                         </Typography>
                         <Tabs value={value} onChange={this.handleTabChange} className={classes.tabs}>
                             <Tab label="Overview" component={Link} to="/" />
-                            <Tab label="2v2" component={Link} to="/2v2" />
-                            <Tab label="3v3" component={Link} to="/3v3" />
-                            <Tab label="RBG" component={Link} to="/RBG" />
+                            <Tab label="Data" component={Link} to="/data" />
                         </Tabs>
                         <LoginButton />
                     </Toolbar>
@@ -66,6 +64,9 @@ class AppHeader extends React.Component {
             </div>
             );
         }
-};
+    };
+    
+    // <Tab label="3v3" component={Link} to="/3v3" />
+    // <Tab label="RBG" component={Link} to="/RBG" />
 
 export default withStyles(styles)(AppHeader);

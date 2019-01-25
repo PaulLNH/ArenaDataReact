@@ -13,6 +13,7 @@ import { NavigateBeforeSharp } from '@material-ui/icons';
 import Images from '../assets/images/classImages';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import CircularIndeterminate from '../components/Loading';
 const classImages = Images.classImages;
 
 String.prototype.toProperCase = function () {
@@ -128,6 +129,12 @@ class Match extends React.Component {
           let playerClass = currentPlayer.slice(0);
           // Stores the string of the players spec
           let playerSpec = currentPlayer.slice(1);
+        //   if (key == '1545560217') {
+        //       console.log(playerSpec);
+        //   }
+          if (playerSpec[0] === 'Beast Mastery') {
+              playerSpec[0] = 'Beast_Mastery';
+          };
           // Creates a reference to the imported image above
         let img = classImages[`${playerClass[0]}${playerSpec[0]}`];
         // Pushes completed image url to the result array
@@ -151,6 +158,71 @@ class Match extends React.Component {
         result.push(<span className={classes} color = "blue" key={key + playerClass + playerSpec}>{playerClass[0].toProperCase()}&nbsp;&nbsp;</span>);
     };
   return result
+};
+
+displayMapName = (map, key, classes) => {
+    switch (map) {
+        case '572':
+            // code for RoL
+            // win ? mapWL.RoL.win++ : mapWL.RoL.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name:`Ruins of Lordaeron`, initials: `RoL`}
+            break;
+            case '617':
+            // code for DS
+            // win ? mapWL.DS.win++ : mapWL.DS.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name:`Dalaran Sewers`, initials: `DS`}
+            break;
+            case '980':
+            // code for TA
+            // win ? mapWL.TA.win++ : mapWL.TA.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name:`Tol'Viron Arena`, initials: `TA`}
+            break;
+            case '1134':
+            // code for TTP
+            // win ? mapWL.TTP.win++ : mapWL.TTP.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Tiger's Peak`, initials: `TP`}
+            break;
+            case '1504':
+            // code for BRHA
+            // win ? mapWL.BRHA.win++ : mapWL.BRHA.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Black Rook Hold`, initials: `BRH`}
+            break;
+            case '1505':
+            // code for NA
+            // win ? mapWL.NA.win++ : mapWL.NA.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Nagrand Arena`, initials: `NA`}
+            break;
+            case '1552':
+            // code for AF
+            // win ? mapWL.AF.win++ : mapWL.AF.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Ashamane's Fall`, initials: `AF`}
+            break;
+            case '1672':
+            // code for BEA
+            // win ? mapWL.BEA.win++ : mapWL.BEA.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Blades Edge Arena`, initials: `BEA`}
+            break;
+            case '1825':
+            // code for HP
+            // win ? mapWL.HP.win++ : mapWL.HP.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Hook Poin`, initials: `HP`}
+            break;
+            case '1911':
+            // code for M
+            // win ? mapWL.M.win++ : mapWL.M.loss++
+            // win ? mapWL.game.win++ : mapWL.game.loss++
+            return {name: `Mugambala`, initials: `M`}
+            break;
+    }
 };
 
   render() {
@@ -184,6 +256,13 @@ class Match extends React.Component {
                     </Typography>
                 </Tooltip>
             </Grid>
+            <Grid item xs={1} sm={1} md={1}>
+                <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                    <Typography className={classes.secondaryHeading}>
+                        {this.displayMapName(match.Map).initials}
+                    </Typography>
+                </Tooltip>
+            </Grid>
             <Grid item xs={4} sm={4} md={4} className={classes.teamComposition} >
                     <Typography className={classes.teamComposition}>
                     {this.displayTeamComp(match.TeamComposition, match.Timestamp, classes.classText)}
@@ -205,16 +284,10 @@ class Match extends React.Component {
                 </Grid>
             </Grid>
 
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-          <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-              maximus est, id dignissim quam.
-            </Typography>
-            <Divider />
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
             <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-              maximus est, id dignissim quam.
+              
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

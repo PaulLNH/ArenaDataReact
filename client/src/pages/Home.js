@@ -7,18 +7,26 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Match from '../components/Match';
 
 const styles = theme => ({
     root: {
       width: '100%',
+      flexGrow: 1,
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
     },
     table: {
       minWidth: 700,
     },
+    spinner: {
+        zIndex: 5000
+    },
+    progress: {
+        margin: theme.spacing.unit * 2,
+      },
   });
 
 
@@ -64,7 +72,7 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     // Your render function
-    return <div>
+    return <div className={classes.root}>
                 {this.state.loaded ? 
                     this.state.data.map(match => (
                         <Match 
@@ -73,10 +81,15 @@ class Home extends Component {
                             match={match}
                         />
                     ))
-                : 'Loading Data...'}
+                : <CircularProgress className={classes.progress} color="secondary" />
+                }
             </div>
   }
-}
+};
+
+// CircularIndeterminate.propTypes = {
+//     classes: PropTypes.object.isRequired,
+//   };
 
 // Timestamp;Map;PlayersNumber;TeamComposition;EnemyComposition;Duration;Victory;KillingBlows;Damage;Healing;Honor;RatingChange;MMR;EnemyMMR;Specialization;isRated
 
