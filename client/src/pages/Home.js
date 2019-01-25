@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import Moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Match from '../components/Match';
@@ -20,9 +13,6 @@ const styles = theme => ({
     },
     table: {
       minWidth: 700,
-    },
-    spinner: {
-        zIndex: 5000
     },
     progress: {
         margin: theme.spacing.unit * 2,
@@ -46,7 +36,6 @@ class Home extends Component {
   };
 
   componentWillMount() {
-
     // Your parse code, but not seperated in a function
     var csvFilePath = require("../seed.csv");
     var Papa = require("papaparse/papaparse.min.js");
@@ -76,12 +65,12 @@ class Home extends Component {
                 {this.state.loaded ? 
                     this.state.data.map(match => (
                         <Match 
-                            key={match.Timestamp} 
-                            id={match.Timestamp}
-                            match={match}
+                        key={match.Timestamp} 
+                        id={match.Timestamp}
+                        match={match}
                         />
-                    ))
-                : <CircularProgress className={classes.progress} color="secondary" />
+                        ))
+                    : <CircularProgress className={classes.progress} color="secondary" />
                 }
             </div>
   }
