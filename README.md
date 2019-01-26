@@ -1,68 +1,75 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Arena Data
 
-## Available Scripts
+This is a community project focused on data visualization which utilizes the REFlex addon [REFlex - Arena/Battleground Historian](https://wow.curseforge.com/projects/reflex-battleground-historian) that provides a CSV dump of previous arena matches allowing users to paste that data into the Arena Data website and rendering beautiful visualizations representing their progress.
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Prerequisites
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+What things you need to install the software and how to install them
 
-### `npm test`
+```
+This app is still in production and the prerequisites will be updated once the development enters beta.
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installing
 
-### `npm run build`
+Clone the repo by openeing your Git Bash terminal and typing in (a directory you wish to house this application): `https://github.com/PaulLNH/ArenaDataReact.git`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+This app is still in production and the installation notes will be updated once the development enters beta.
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Running the tests
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This app will feature functional and unit tests with [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com/) and [Jest](https://jestjs.io/).
 
-### `npm run eject`
+### Break down into end to end tests
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Testing will be preformed as this application enters beta.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+This app is still in production and the end to end tests will be conducted as this application enters beta for initial release.
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### And coding style tests
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Testing will be preformed as this application enters beta.
 
-## Learn More
+```
+This app is still in production and the coding style tests will be conducted as this application enters beta for initial release.
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This application will likely be deployed through [Netlify](https://www.netlify.com/), [Heroku](http://herokuapp.com) or [Firebase](https://firebase.google.com/docs/hosting/deploying).
 
-### Code Splitting
+## Built With
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+* [React js](https://reactjs.org/) - A JavaScript library for building user interfaces
+* [Node js](https://nodejs.org/en/) - An asynchronous event driven JavaScript runtime enviornment designed to build scalable network applications.
+* [Express](https://rometools.github.io/rome/) - Fast, unopinionated, minimalist web framework for Node.js
 
-### Analyzing the Bundle Size
+## Contributing
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Please read [CONTRIBUTING.md](https://gist.github.com/PaulLNH/f66c363cf5e6014e0a9aa1641a6a0f02) for details on our code of conduct, and the process for submitting pull requests to us.
 
-### Making a Progressive Web App
+## Versioning
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/PaulLNH/ArenaData/tags).
 
-### Advanced Configuration
+## Authors
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+* **Paul Laird** - *Initial work* - [PaulLNH](https://github.com/PaulLNH)
 
-### Deployment
+See also the list of [contributors](https://github.com/PaulLNH/ArenaData/contributors) who participated in this project.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+## License
 
-### `npm run build` fails to minify
+This project is licensed under Apache License 2.0 - see the [LICENSE.md](https://github.com/PaulLNH/ArenaDataReact/blob/master/LICENSE.md) file for details
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Acknowledgments
+
+* My wife for allowing me time to work on personal projects
