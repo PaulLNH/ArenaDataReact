@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Data from './pages/Data';
 import RBG from './pages/RBG';
 import Import from './pages/Import';
-import { withStyles, MultiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 
 const styles = theme => ({

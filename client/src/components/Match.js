@@ -10,13 +10,14 @@ import TrendingUp from '@material-ui/icons/TrendingUp';
 import TrendingDown from '@material-ui/icons/TrendingDown';
 import TrendingFlat from '@material-ui/icons/TrendingFlat';
 import Moment from 'moment';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Images from '../assets/images/classImages';
+import ClassImages from '../assets/images/classImages';
+import MapImages from '../assets/images/mapImages';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 
-const classImages = Images.classImages;
+const classImages = ClassImages.classImages;
+const mapImages = MapImages.mapImages;
 
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -100,6 +101,10 @@ enemyComposition: {
   specIcon: {
     width: '2em',
     height: '2em',
+  },
+  mapImages: {
+      width: '200px',
+      height: 'auto',
   },
   MMRChange: {
     MMRUp: {
@@ -200,106 +205,93 @@ displayMapName = (map, key, classes) => {
             // win ? mapWL.RoL.win++ : mapWL.RoL.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name:`Ruins of Lordaeron`, initials: `RoL`}
-            break;
-            case '617':
+        case '617':
             // code for DS
             // win ? mapWL.DS.win++ : mapWL.DS.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name:`Dalaran Sewers`, initials: `DS`}
-            break;
-            case '980':
+        case '980':
             // code for TA
             // win ? mapWL.TA.win++ : mapWL.TA.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name:`Tol'Viron Arena`, initials: `TA`}
-            break;
-            case '1134':
+        case '1134':
             // code for TTP
             // win ? mapWL.TTP.win++ : mapWL.TTP.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Tiger's Peak`, initials: `TP`}
-            break;
-            case '1504':
+        case '1504':
             // code for BRHA
             // win ? mapWL.BRHA.win++ : mapWL.BRHA.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Black Rook Hold`, initials: `BRH`}
-            break;
-            case '1505':
+        case '1505':
             // code for NA
             // win ? mapWL.NA.win++ : mapWL.NA.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Nagrand Arena`, initials: `NA`}
-            break;
-            case '1552':
+        case '1552':
             // code for AF
             // win ? mapWL.AF.win++ : mapWL.AF.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Ashamane's Fall`, initials: `AF`}
-            break;
-            case '1672':
+        case '1672':
             // code for BEA
             // win ? mapWL.BEA.win++ : mapWL.BEA.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Blades Edge Arena`, initials: `BEA`}
-            break;
-            case '1825':
+        case '1825':
             // code for HP
             // win ? mapWL.HP.win++ : mapWL.HP.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Hook Poin`, initials: `HP`}
-            break;
-            case '1911':
+        case '1911':
             // code for M
             // win ? mapWL.M.win++ : mapWL.M.loss++
             // win ? mapWL.game.win++ : mapWL.game.loss++
             return {name: `Mugambala`, initials: `M`}
-            break;
+        default:
+        return {name: `No Map Found :(`, initials: `SOL`}
     }
 };
 
-displayMapImage = (map, key) => {
+displayMapImage = (map) => {
+    console.log(`MAP:`);
+    console.log(map);
     switch (map) {
         case '572':
             // code for RoL
-            return {name:`Ruins of Lordaeron`, initials: `RoL`}
-            break;
-            case '617':
+            return {src: 'RoL'};
+        case '617':
             // code for DS
-            return {name:`Dalaran Sewers`, initials: `DS`}
-            break;
-            case '980':
+            return {src: 'DS'};
+        case '980':
             // code for TA
-            return {name:`Tol'Viron Arena`, initials: `TA`}
-            break;
-            case '1134':
+            return {src: 'TA'};
+        case '1134':
             // code for TTP
-            return {name: `Tiger's Peak`, initials: `TP`}
-            break;
-            case '1504':
+            return {src: 'TTP'};
+        case '1504':
             // code for BRHA
-            return {name: `Black Rook Hold`, initials: `BRH`}
-            break;
-            case '1505':
+            return {src: 'BRHA'};
+        case '1505':
             // code for NA
-            return {name: `Nagrand Arena`, initials: `NA`}
-            break;
-            case '1552':
+            return {src: 'NA'};
+        case '1552':
             // code for AF
-            return {name: `Ashamane's Fall`, initials: `AF`}
-            break;
-            case '1672':
+            return {src: 'AF'};
+        case '1672':
             // code for BEA
-            return {name: `Blades Edge Arena`, initials: `BEA`}
-            break;
-            case '1825':
+            return {src: 'BEA'};
+        case '1825':
             // code for HP
-            return {name: `Hook Poin`, initials: `HP`}
-            break;
-            case '1911':
+            return {src: 'HP'};
+        case '1911':
             // code for M
-            return {name: `Mugambala`, initials: `M`}
-            break;
+            return {src: 'M'};
+        default:
+            console.error(`ENTERED DEFAULT MAP IMAGE CASE.`);
+            return {src: 'M'};
     }
 };
 
@@ -377,7 +369,12 @@ displayMapImage = (map, key) => {
                             <Typography>ENEMY MMR: <br />{match.EnemyMMR}</Typography>
                         </Grid>
                         <Grid item xs={2} sm={2} md={2} container >
-                            
+                            <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                                <span>
+                                    <img src={mapImages[this.displayMapImage(match.Map).src]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
+                                    &nbsp;
+                                </span>
+                            </Tooltip>
                         </Grid>
                     </Grid>
                 </Paper>

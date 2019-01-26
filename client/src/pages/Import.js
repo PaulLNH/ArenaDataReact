@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Typography,
   withStyles,
@@ -53,7 +52,7 @@ class Import extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const { value } = this.state;
+        // const { value } = this.state;
     
         return (
             <div className={classes.root}>
