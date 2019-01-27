@@ -270,10 +270,10 @@ displayMapImage = (map) => {
             return {src: 'TA'};
         case '1134':
             // code for TTP
-            return {src: 'TTP'};
+            return {src: 'TP'};
         case '1504':
             // code for BRHA
-            return {src: 'BRHA'};
+            return {src: 'BRH'};
         case '1505':
             // code for NA
             return {src: 'NA'};
@@ -302,86 +302,146 @@ displayMapImage = (map) => {
 
     return (
       <div className={classes.root}>
-      <Paper className={classes.paper} elevation={2}>
-        <ExpansionPanel expanded={expanded === match.Timestamp} onChange={this.handleChange(match.Timestamp)}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <span className={classes.matchTime}>
-            <Typography className={classes.heading}>
-            {Moment.unix(match.Timestamp).format("HH:mm A")}
-            <br />
-            {Moment.unix(match.Timestamp).format("ddd YYYY-MM-DD")}
-            </Typography>
-          </span>
+        <Paper className={classes.paper} elevation={2}>
+            <ExpansionPanel expanded={expanded === match.Timestamp} onChange={this.handleChange(match.Timestamp)}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                {/** 
+                    Time and date of match 
+                    08:44 AM
+                    Thur 2019-01-17 
+                */}
+                <span className={classes.matchTime}>
+                    <Typography className={classes.heading}>
+                    {Moment.unix(match.Timestamp).format("HH:mm A")}
+                    <br />
+                    {Moment.unix(match.Timestamp).format("ddd YYYY-MM-DD")}
+                    </Typography>
+                </span>
 
-            <Grid container spacing={0}>
-            <Grid item xs={1} sm={1} md={1}>
-                {match.Victory === 'true' ? 
-                    <Typography className={classes.victory}>Victory!</Typography> : 
-                    <Typography className={classes.defeat}>Defeat!</Typography>
-                }
-            </Grid>
-            <Grid item xs={1} sm={1} md={1}>
-                <Tooltip title={`Match ended after ${match.Duration} seconds`} aria-label={`Match ended after ${match.Duration} seconds`}>
-                    <Typography className={classes.secondaryHeading}>
-                        {match.Duration}s
-                    </Typography>
-                </Tooltip>
-            </Grid>
-            <Grid item xs={1} sm={1} md={1}>
-                <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
-                    <Typography className={classes.secondaryHeading}>
-                        {this.displayMapName(match.Map).initials}
-                    </Typography>
-                </Tooltip>
-            </Grid>
-            <Grid item xs={4} sm={4} md={4} className={classes.teamComposition} >
-                    <Typography className={classes.teamComposition}>
-                    {this.displayTeamComp(match.TeamComposition, match.Timestamp, classes.classText)}
-                    &nbsp;
-                    {this.displayTeamIcons(match.TeamComposition, match.Timestamp, classes.specIcon)}
-                    </Typography>
-                </Grid>
-                <Grid item xs={1} sm={1} md={1} container justify = "center">
-                    <Typography className={classes.vsText}>
-                        <strong>VS</strong>
-                    </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4} md={4} className={classes.teamComposition} >
-                    <Typography className={classes.enemyComposition}>
-                        {this.displayTeamIcons(match.EnemyComposition, match.Timestamp, classes.specIcon)}
-                        &nbsp;
-                        {this.displayTeamComp(match.EnemyComposition, match.Timestamp, classes.classText)}
-                    </Typography>
-                </Grid>
-            </Grid>
-
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <Paper className={classes.paper} elevation={1}>
-                    <Grid container spacing={16} align = "center">
-                        <Grid item xs={1} sm={1} md={1} container >
-                            {this.displayMMRChange(match.RatingChange, match.Timestamp, classes.MMRChange)}
-                        </Grid>
-                        <Grid item xs={1} sm={1} md={1} container >
-                            <Typography>TEAM MMR: <br />{match.MMR}</Typography>
-                        </Grid>
-                        <Grid item xs={1} sm={1} md={1} container >
-                            <Typography>ENEMY MMR: <br />{match.EnemyMMR}</Typography>
-                        </Grid>
-                        <Grid item xs={2} sm={2} md={2} container >
-                            <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
-                                <span>
-                                    <img src={mapImages[this.displayMapImage(match.Map).src]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
-                                    &nbsp;
-                                </span>
-                            </Tooltip>
-                        </Grid>
+                <Grid container spacing={0}>
+                    {/**
+                        Match status
+                        Victory!
+                    */}
+                    <Grid item xs={1} sm={1} md={1}>
+                        {match.Victory === 'true' ? 
+                            <Typography className={classes.victory}>Victory!</Typography> : 
+                            <Typography className={classes.defeat}>Defeat!</Typography>
+                        }
                     </Grid>
-                </Paper>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
-        </Paper>
-      </div>
+                    {/**
+                        Match Duration
+                        151s
+                    */}
+                    <Grid item xs={1} sm={1} md={1}>
+                        <Tooltip title={`Match ended after ${match.Duration} seconds`} aria-label={`Match ended after ${match.Duration} seconds`}>
+                            <Typography className={classes.secondaryHeading}>
+                                {match.Duration}s
+                            </Typography>
+                        </Tooltip>
+                    </Grid>
+                    {/**
+                        Map the match was played on
+                        BEA
+                    */}
+                    <Grid item xs={1} sm={1} md={1}>
+                        <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                            <Typography className={classes.secondaryHeading}>
+                                {this.displayMapName(match.Map).initials}
+                            </Typography>
+                        </Tooltip>
+                    </Grid>
+                    {/**
+                        Users team composition
+                        Mage Priest Rogue (with spec specific icons)
+                    */}
+                    <Grid item xs={4} sm={4} md={4} className={classes.teamComposition} >
+                        <Typography className={classes.teamComposition}>
+                        {this.displayTeamComp(match.TeamComposition, match.Timestamp, classes.classText)}
+                        &nbsp;
+                        {this.displayTeamIcons(match.TeamComposition, match.Timestamp, classes.specIcon)}
+                        </Typography>
+                    </Grid>
+                    {/**
+                        Static text
+                        VS
+                    */}
+                    <Grid item xs={1} sm={1} md={1} container justify = "center">
+                        <Typography className={classes.vsText}>
+                            <strong>VS</strong>
+                        </Typography>
+                    </Grid>
+                    {/**
+                        Enemy team composition
+                        Monk Paladin Warrior (with spec specific icons)
+                    */}
+                    <Grid item xs={4} sm={4} md={4} className={classes.teamComposition} >
+                        <Typography className={classes.enemyComposition}>
+                            {this.displayTeamIcons(match.EnemyComposition, match.Timestamp, classes.specIcon)}
+                            &nbsp;
+                            {this.displayTeamComp(match.EnemyComposition, match.Timestamp, classes.classText)}
+                        </Typography>
+                    </Grid>
+
+                </Grid>
+
+                </ExpansionPanelSummary>
+
+                {/**
+                    Inside the expanded panel of each card
+                */}
+                <ExpansionPanelDetails>
+                    <Paper className={classes.paper} elevation={1}>
+                        <Grid container spacing={16} align = "center">
+                            {/**
+                                MMR Change
+                                (icon) +15
+                            */}
+                            <Grid item xs={1} sm={1} md={1} container >
+                                {this.displayMMRChange(match.RatingChange, match.Timestamp, classes.MMRChange)}
+                            </Grid>
+                            {/**
+                                Teams MMR
+                                TEAM MMR:
+                                2240
+                            */}
+                            <Grid item xs={1} sm={1} md={1} container >
+                                <Typography>TEAM MMR: <br />{match.MMR}</Typography>
+                            </Grid>
+                            {/**
+                                Teams MMR
+                                ENEMY MMR:
+                                2262
+                            */}
+                            <Grid item xs={1} sm={1} md={1} container >
+                                <Typography>ENEMY MMR: <br />{match.EnemyMMR}</Typography>
+                            </Grid>
+                            {/**
+                                Display image of the map played on
+                                (image)
+                            */}
+                            <Grid item xs={2} sm={2} md={2} container >
+                                <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                                <span>
+                                <img src={mapImages[this.displayMapImage(match.Map).src]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
+                                &nbsp;
+                                </span>
+                                </Tooltip>
+                            </Grid>
+                            {/**
+                                Static text
+                                Personal Stats:
+                            */}
+                            <Grid item xs={1} sm={1} md={1} container >
+                                <Typography className={classes.secondaryHeading}>Personal Stats: <br /></Typography>
+                            </Grid>
+
+                        </Grid>
+                    </Paper>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
+            </Paper>
+        </div>
     );
   }
 }

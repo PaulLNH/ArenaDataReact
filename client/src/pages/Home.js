@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import Loading from '../components/Loading';
 
 import Match from '../components/Match';
 
@@ -35,6 +36,7 @@ class Home extends Component {
     loaded: false,
   };
 
+  // This imports local CSV seed data for development, beta release will need to get csv from the Import.js component
   componentWillMount() {
     // Your parse code, but not seperated in a function
     var csvFilePath = require("../seed.csv");
@@ -60,7 +62,6 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-    // Your render function
     return <div className={classes.root}>
                 {this.state.loaded ? 
                     this.state.data.map(match => (
@@ -70,15 +71,11 @@ class Home extends Component {
                         match={match}
                         />
                         ))
-                    : <CircularProgress className={classes.progress} color="secondary" />
+                    : <Loading />
                 }
             </div>
   }
 };
-
-// CircularIndeterminate.propTypes = {
-//     classes: PropTypes.object.isRequired,
-//   };
 
 // Timestamp;Map;PlayersNumber;TeamComposition;EnemyComposition;Duration;Victory;KillingBlows;Damage;Healing;Honor;RatingChange;MMR;EnemyMMR;Specialization;isRated
 
