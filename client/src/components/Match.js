@@ -15,6 +15,7 @@ import ClassImages from '../assets/images/classImages';
 import MapImages from '../assets/images/mapImages';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
+import PersonalStats from '../components/match/personalStats';
 
 const classImages = ClassImages.classImages;
 const mapImages = MapImages.mapImages;
@@ -256,8 +257,6 @@ displayMapName = (map, key, classes) => {
 };
 
 displayMapImage = (map) => {
-    console.log(`MAP:`);
-    console.log(map);
     switch (map) {
         case '572':
             // code for RoL
@@ -429,11 +428,11 @@ displayMapImage = (map) => {
                                 </Tooltip>
                             </Grid>
                             {/**
-                                Static text
+                                Table of personal stats: 
                                 Personal Stats:
                             */}
-                            <Grid item xs={1} sm={1} md={1} container >
-                                <Typography className={classes.secondaryHeading}>Personal Stats: <br /></Typography>
+                            <Grid item xs={7} sm={7} md={7} container >
+                                <PersonalStats className={classes.secondaryHeading} match={match} />
                             </Grid>
 
                         </Grid>

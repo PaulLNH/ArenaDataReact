@@ -11,22 +11,25 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    marginTop: "0",
+    overflowX: 'none',
   },
   table: {
-    minWidth: 700,
+    // minWidth: 500,
+    align: 'center',
+    justifyContent: 'center',
   },
 });
 
 
 function personalStats(props) {
   const { classes } = props;
+  const { match } = props;
 
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
-        <TableHead>
+        <TableHead fontWeight="bold">
           <TableRow>
             <TableCell>Spec</TableCell>
             <TableCell align="right">Damage</TableCell>
@@ -35,16 +38,14 @@ function personalStats(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-            <TableRow key={row.id}>
+            <TableRow key={match.Timestamp}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {match.Specialization}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{match.Damage}</TableCell>
+              <TableCell align="right">{match.Healing}</TableCell>
+              <TableCell align="right">{match.KillingBlows}</TableCell>
             </TableRow>
-          ))}
         </TableBody>
       </Table>
     </Paper>

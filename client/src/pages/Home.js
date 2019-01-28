@@ -46,6 +46,7 @@ class Home extends Component {
       delimiter: ';',
       download: true,
       skipEmptyLines: true,
+    //   step: this.updateData,
       // Here this is also available. So we can call our custom class method
       complete: this.updateData
     });

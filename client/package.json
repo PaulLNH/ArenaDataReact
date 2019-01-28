@@ -5,7 +5,10 @@
   "dependencies": {
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
+    "@nivo/bar": "^0.52.1",
+    "@nivo/generators": "^0.52.0",
     "moment": "^2.23.0",
+    "nivo": "^0.31.0",
     "papaparse": "^4.6.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
