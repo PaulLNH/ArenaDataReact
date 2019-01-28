@@ -9,27 +9,28 @@ const styles = theme => ({
   root: {
     height: '500px',
     width: '500px',
+    flexGrow: 1,
+    float: 'left',
   },
 });
 
 function Data(props) {
   const { classes } = props;
   return (
-    <div>
-        <Typography variant="display1">Data Visualization</Typography>
-        <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '100vh', minWidth: '100vw' }}
-        >
-            <Grid item xs={6} sm={6} md={6} className={classes.root} >
-                <MapWLStackedBar />
-            </Grid>   
-        </Grid>
-    </div>
+    <Grid
+    container
+    spacing={0}
+    direction="row"
+    alignItems="center"
+    justify="center"
+    >
+        <div className={classes.root} >
+            <MapWLStackedBar />
+        </div>
+        <div className={classes.root} >
+            <MapWLStackedBar />
+        </div>
+    </Grid>
   );
 }
 
