@@ -3,7 +3,7 @@ import { ResponsiveBar } from '@nivo/bar'
 // import { generateCountriesData } from '@nivo/generators'
 // import { colors } from '../../constants'
 
-const colors = ['#fae04d', '#ff744c', '#789792', '#b1646a', '#efa9a1', '#8470c7', '#97a66f'];
+// const colors = ['#fae04d', '#ff744c', '#789792', '#b1646a', '#efa9a1', '#8470c7', '#97a66f'];
 
             // 572 code for RoL
             // 617 code for DS
@@ -126,6 +126,7 @@ const Bar = () => (
                     "itemDirection": "left-to-right",
                     "itemOpacity": 0.85,
                     "symbolSize": 20,
+                    "textColor": '#ffffff',
                     "effects": [
                         {
                             "on": "hover",

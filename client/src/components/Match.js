@@ -118,7 +118,7 @@ enemyComposition: {
     },
     MMRFlat: {
         fontSize: 'large',
-        color: "disabled",
+        color: theme.palette.grey[900],
     },
   },
   paper: {
@@ -168,7 +168,7 @@ class Match extends React.Component {
         /**
          * @Warning : Each child in an array or iterator should have a unique "key" prop.
          */
-        result.push(<Tooltip title={`${playerClass[0]} - ${playerSpec[0]}`} aria-label={`${playerClass[0]} - ${playerSpec[0]}`}><span><img src={`${img}`} className={classes} key={`${key}-${playerClass[0]}${playerSpec[0]}`} alt={`${playerClass[0]} - ${playerSpec[0]}`}/>&nbsp;</span></Tooltip>)
+        result.push(<Tooltip title={`${playerClass[0]} - ${playerSpec[0]}`} aria-label={`${playerClass[0]} - ${playerSpec[0]}`} key={`Tooltip# ${key}-${playerClass[0]}${playerSpec[0]}`}><span><img src={`${img}`} className={classes} key={`${key}-${playerClass[0]}${playerSpec[0]}`} alt={`${playerClass[0]} - ${playerSpec[0]}`}/>&nbsp;</span></Tooltip>)
       };
        
     // should return <img src={MAGEFrost} /><img src={PRIESTDiscipline} /><img src={ROGUEAssassination} />
@@ -190,11 +190,11 @@ class Match extends React.Component {
   displayMMRChange = (MMRChange, key, classes) => {
     let result = [];
     if (MMRChange > 0) {
-        result.push(<div>{<TrendingUp color="primary" fontSize="large" />}<Typography fontSize="2em" color="primary"  key={key + MMRChange}>&nbsp;&nbsp;+{MMRChange}</Typography></div>);
+        result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingUp color="primary" fontSize="large" />}<Typography fontSize="2em" color="primary"  key={key + MMRChange}>&nbsp;&nbsp;+{MMRChange}</Typography></div>);
     } else if (MMRChange === '0') {
-        result.push(<div>{<TrendingFlat color="disabled" fontSize="large" />}<Typography className={classes.MMRFlat} color="disabled" key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
+        result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingFlat color="disabled" fontSize="large" />}<Typography className={classes.MMRFlat}  key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
     } else if (MMRChange < 0) {
-        result.push(<div>{<TrendingDown color="error" fontSize="large" />}<Typography className={classes.MMRDown} color="error" key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
+        result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingDown color="error" fontSize="large" />}<Typography className={classes.MMRDown} color="error" key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
     };
   return result
 };

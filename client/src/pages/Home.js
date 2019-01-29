@@ -38,17 +38,22 @@ class Home extends Component {
 
   // This imports local CSV seed data for development, beta release will need to get csv from the Import.js component
   componentWillMount() {
+    let self = this; // bind this so updateData will have correct context in setTimeout
     // Your parse code, but not seperated in a function
     var csvFilePath = require("../seed.csv");
     var Papa = require("papaparse/papaparse.min.js");
-    Papa.parse(csvFilePath, {
-      header: true,
-      delimiter: ';',
-      download: true,
-      skipEmptyLines: true,
-    //   step: this.updateData,
-      // Here this is also available. So we can call our custom class method
-      complete: this.updateData
+
+    // Running setTimeout to run parser on a seperate thread
+    setTimeout( function() {
+        Papa.parse(csvFilePath, {
+          header: true,
+          delimiter: ';',
+          download: true,
+          skipEmptyLines: true,
+          // step: this.updateData,
+          // Calling our context of componentWillMount
+          complete: self.updateData
+        });
     });
   }
 
@@ -73,6 +78,7 @@ class Home extends Component {
                         />
                         ))
                     : <Loading />
+                    
                 }
             </div>
   }
