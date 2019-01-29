@@ -16,56 +16,56 @@ const colors = ['#fae04d', '#ff744c', '#789792', '#b1646a', '#efa9a1', '#8470c7'
             // 1825 code for HP
             // 1911 code for M
 
-            const data = [
+const data = [
     {
       "map": "RoL",
-      "loss": 120,
-      "wins": 193,
+      "wins": 120,
+      "loss": 193,
     },
     {
       "map": "DS",
-      "loss": 35,
-      "wins": 160,
+      "wins": 35,
+      "loss": 160,
     },
     {
       "map": "TA",
-      "loss": 33,
-      "wins": 120,
+      "wins": 33,
+      "loss": 120,
     },
     {
       "map": "TTP",
-      "loss": 27,
-      "wins": 3,
+      "wins": 27,
+      "loss": 3,
     },
     {
       "map": "BRH",
-      "loss": 199,
-      "wins": 19,
+      "wins": 199,
+      "loss": 19,
     },
     {
       "map": "NA",
-      "loss": 117,
-      "wins": 107,
+      "wins": 117,
+      "loss": 107,
     },
     {
       "map": "AF",
-      "loss": 195,
-      "wins": 156,
+      "wins": 195,
+      "loss": 156,
     },
     {
       "map": "BEA",
-      "loss": 195,
-      "wins": 156,
+      "wins": 195,
+      "loss": 156,
     },
     {
       "map": "HP",
-      "loss": 195,
-      "wins": 156,
+      "wins": 195,
+      "loss": 156,
     },
     {
       "map": "M",
-      "loss": 195,
-      "wins": 156,
+      "wins": 195,
+      "loss": 156,
     }
   ]
 
@@ -73,8 +73,8 @@ const Bar = () => (
         <ResponsiveBar
             data={data}
             keys={[
-                "loss",
                 "wins",
+                "loss",
             ]}
             indexBy="map"
             margin={{
@@ -84,7 +84,7 @@ const Bar = () => (
                 "left": 60
             }}
             padding={0.3}
-            colors="nivo"
+            colors="dark2"
             colorBy="id"
             borderColor="inherit:darker(1.6)"
             axisTop={null}
@@ -93,7 +93,7 @@ const Bar = () => (
                 "tickSize": 5,
                 "tickPadding": 5,
                 "tickRotation": 0,
-                "legend": "map",
+                "legend": "Map",
                 "legendPosition": "middle",
                 "legendOffset": 32
             }}
@@ -101,13 +101,14 @@ const Bar = () => (
                 "tickSize": 5,
                 "tickPadding": 5,
                 "tickRotation": 0,
-                "legend": "food",
+                "legend": "Wins / Loss",
                 "legendPosition": "middle",
                 "legendOffset": -40
             }}
             labelSkipWidth={12}
             labelSkipHeight={12}
-            labelTextColor="inherit:darker(1.6)"
+            // labelTextColor="inherit:darker(1.6)"
+            labelTextColor="white"
             animate={true}
             motionStiffness={90}
             motionDamping={15}
