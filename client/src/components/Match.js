@@ -20,6 +20,7 @@ import PersonalStats from '../components/match/personalStats';
 const classImages = ClassImages.classImages;
 const mapImages = MapImages.mapImages;
 
+// eslint-disable-next-line
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };

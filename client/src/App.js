@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 
@@ -23,8 +23,8 @@ const styles = theme => ({
     },
 });
 
-
-const App = ({ classes }) => (
+class App extends Component {
+// const App = ({ classes }) => (
     state = {
         data: [],
         id: 0,
@@ -40,20 +40,20 @@ const App = ({ classes }) => (
     // changed and implement those changes into our UI
     componentDidMount() {
         this.getDataFromDb();
-        if (!this.state.intervalIsSet) {
-        let interval = setInterval(this.getDataFromDb, 1000);
-        this.setState({ intervalIsSet: interval });
-        }
-    }
+        // if (!this.state.intervalIsSet) {
+        // let interval = setInterval(this.getDataFromDb, 1000);
+        // this.setState({ intervalIsSet: interval });
+        // }
+    };
 
     // never let a process live forever 
     // always kill a process everytime we are done using it
     componentWillUnmount() {
-        if (this.state.intervalIsSet) {
-        clearInterval(this.state.intervalIsSet);
-        this.setState({ intervalIsSet: null });
-        }
-    }
+        // if (this.state.intervalIsSet) {
+        // clearInterval(this.state.intervalIsSet);
+        // this.setState({ intervalIsSet: null });
+        // }
+    };
 
     // just a note, here, in the front end, we use the id key of our data object 
     // in order to identify which we want to Update or delete.
@@ -86,7 +86,7 @@ const App = ({ classes }) => (
     updateDB = (idToUpdate, updateToApply) => {
         let objIdToUpdate = null;
         this.state.data.forEach(dat => {
-          if (dat.id == idToUpdate) {
+          if (dat.id === idToUpdate) {
             objIdToUpdate = dat._id;
           }
         });
@@ -101,7 +101,7 @@ const App = ({ classes }) => (
     deleteFromDB = idTodelete => {
         let objIdToDelete = null;
         this.state.data.forEach(dat => {
-        if (dat.id == idTodelete) {
+        if (dat.id === idTodelete) {
             objIdToDelete = dat._id;
         }
         });
@@ -113,21 +113,26 @@ const App = ({ classes }) => (
         });
     };
 
-    <Fragment>
-        <CssBaseline />
-
-            <AppHeader />
-            <main className={classes.main}>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/data" component={Data} />
-                <Route exact path="/2v2" component={TwoVsTwo} />
-                <Route exact path="/3v3" component={ThreeVsThree} />
-                <Route exact path="/RBG" component={RBG} />
-                <Route exact path="/import" component={Import} />
-            </main>
-
-    </Fragment>
-);
+    render() {
+        const { classes } = this.props;
+        return (
+            <Fragment>
+                <CssBaseline />
+        
+                    <AppHeader />
+                    <main className={classes.main}>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/data" component={Data} />
+                        <Route exact path="/2v2" component={TwoVsTwo} />
+                        <Route exact path="/3v3" component={ThreeVsThree} />
+                        <Route exact path="/RBG" component={RBG} />
+                        <Route exact path="/import" component={Import} />
+                    </main>
+        
+            </Fragment>
+        )
+    }
+};
 
 export default withStyles(styles)(App);

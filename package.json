@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mongoose": "^5.4.7",
@@ -13,7 +15,8 @@
     "react-scripts": "2.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"cd server && node server.js\" \"cd client && npm start\"",
+    "startBAK": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -26,5 +29,19 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "This is a community project focused on data visualization which utilizes the REFlex addon [REFlex - Arena/Battleground Historian](https://wow.curseforge.com/projects/reflex-battleground-historian) that provides a CSV dump of previous arena matches allowing users to paste that data into the Arena Data website and rendering beautiful visualizations representing their progress.",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulLNH/ArenaDataReact.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulLNH/ArenaDataReact/issues"
+  },
+  "homepage": "https://github.com/PaulLNH/ArenaDataReact#readme"
 }

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const cors = require('cors');
 const Data = require('./data');
 require("dotenv").config();
 
@@ -36,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // uses morgan for logging
 app.use(logger("dev"));
+// Enable CORS on all routes
+app.use(cors());
 
 // CRUD Routes: 
 
