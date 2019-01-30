@@ -3,6 +3,12 @@ import { ResponsiveBar } from '@nivo/bar'
 // import { generateCountriesData } from '@nivo/generators'
 // import { colors } from '../../constants'
 
+/**
+ * @Fix https://github.com/plouc/nivo/issues/443
+ * @Example https://codesandbox.io/s/000mv35lxn
+ * @Suggestion https://nivo.rocks/storybook/?selectedKind=Bar&selectedStory=diverging%20stacked&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybooks%2Fstorybook-addon-knobs
+ */
+
 // const colors = ['#fae04d', '#ff744c', '#789792', '#b1646a', '#efa9a1', '#8470c7', '#97a66f'];
 
             // 572 code for RoL
@@ -95,7 +101,7 @@ const Bar = () => (
                 "tickRotation": 0,
                 "legend": "Map",
                 "legendPosition": "middle",
-                "legendOffset": 32
+                "legendOffset": 32,
             }}
             axisLeft={{
                 "tickSize": 5,
@@ -103,15 +109,38 @@ const Bar = () => (
                 "tickRotation": 0,
                 "legend": "Wins / Loss",
                 "legendPosition": "middle",
-                "legendOffset": -40
+                "legendOffset": -40,
             }}
             labelSkipWidth={12}
             labelSkipHeight={12}
             // labelTextColor="inherit:darker(1.6)"
-            labelTextColor="white"
+            labelTextColor="#ffffff"
             animate={true}
             motionStiffness={90}
             motionDamping={15}
+            theme={{
+                axis: {
+                //   textColor: '#ffffff',
+                  fontSize: '14px',
+                  tickColor: '#eee',
+                  ticks: {
+                    line: {
+                      stroke: "gray"
+                    },
+                    text: {
+                      fill: "#ffffff",
+                    //   color: "#ffffff",
+                    },
+                  },
+                },
+                // grid: {
+                //   line: {
+                //     stroke: "white",
+                //     strokeWidth: 2,
+                //     strokeDasharray: "4 4"
+                //   }
+                // }
+              }}
             legends={[
                 {
                     "dataFrom": "keys",
@@ -125,8 +154,8 @@ const Bar = () => (
                     "itemHeight": 20,
                     "itemDirection": "left-to-right",
                     "itemOpacity": 0.85,
+                    "itemTextColor": '#ffffff',
                     "symbolSize": 20,
-                    "textColor": '#ffffff',
                     "effects": [
                         {
                             "on": "hover",
