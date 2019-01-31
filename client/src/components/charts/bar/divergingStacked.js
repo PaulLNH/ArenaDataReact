@@ -103,7 +103,9 @@ const theme = {
   }
 };
 
-const colorBy = ({ id }) => (id === "lost" ? "#d43c3c" : "#0e843d");
+const colorBy = ({ id }) => (id === "lost" ? "#d43c3c" : "#557A95");
+// colors: #FF652F
+// Win Colors: #0e843d #FFE400 #557A95
 
 const legends = [
   {
