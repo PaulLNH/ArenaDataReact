@@ -48,7 +48,7 @@ class Import extends React.Component {
     constructor(props) {
         super(props);
         this.handleImport = this.handleImport.bind(this);
-        this.putDataToDB = this.putDataToDB.bind(this);
+        this.submitDataToDB = this.submitDataToDB.bind(this);
         this.state = {
             multiline: '',
             clientID: null,
@@ -58,8 +58,8 @@ class Import extends React.Component {
     }
 
     componentDidMount() {
-        if (!localStorage.hasOwnProperty("clientID")) {
-            let clientID = JSON.parse(localStorage.getItem("clientID"));
+        if (localStorage.hasOwnProperty("clientID")) {
+            let clientID = localStorage.getItem("clientID");
             this.setState( { clientID } );
         }
     };
@@ -71,7 +71,7 @@ class Import extends React.Component {
       };
 
     // Import CSV
-    putDataToDB(dataToImport) {
+    submitDataToDB(dataToImport) {
             axios.post("http://localhost:3001/api/import", {
                 id: this.state.clientID,
                 message: dataToImport,
@@ -85,7 +85,7 @@ class Import extends React.Component {
 
     handleImport(formEvent) {
         formEvent.preventDefault();
-        this.putDataToDB(this.state.multiline);
+        this.submitDataToDB(this.state.multiline);
     };
 
     render() {
