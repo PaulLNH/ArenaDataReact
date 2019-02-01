@@ -14,6 +14,7 @@ import Check from '@material-ui/icons/Check';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import axios from 'axios';
 
 const styles = theme => ({
     root: {
@@ -36,19 +37,67 @@ const styles = theme => ({
         justify: 'center',
       },
   });
+
+  const UUID = "ddeb27fb-d9a0-4624-be4d-4615062daed4";
   
 
 
+
 class Import extends React.Component {
-    state = {
-        multiline: '',
-      };
+    constructor(props) {
+        super(props);
+        this.handleImport = this.handleImport.bind(this);
+        this.state = {
+            multiline: '',
+            clientID: '',
+            csvData: '',
+            jsonData: [],
+        };
+    }
+    // state = {
+    //     multiline: '',
+    //     clientID: '',
+    //     csvData: '',
+    //     jsonData: [],
+    //   };
+
+    componentDidMount() {
+        // if (!localStorage.getItem("clientID").length) {
+        //     localStorage.setItem(UUID, JSON.stringify(this.state.clientID));
+        // } else {
+        //     const clientID = JSON.parse( localStorage.getItem( "clientID " ) );
+        //     this.setState( { clientID } );
+        // }
+    };
 
     handleChange = name => event => {
         this.setState({
           [name]: event.target.value,
         });
       };
+
+      // Import CSV
+    putDataToDB = message => {
+        let currentIds = this.state.data.map(data => data.id);
+        let idToBeAdded = 0;
+        while (currentIds.includes(idToBeAdded)) {
+            ++idToBeAdded;
+        }
+
+        axios.post("http://localhost:3001/api/putData", {
+        id: idToBeAdded,
+        message: message
+        });
+    };
+
+
+    handleImport(formEvent) {
+        formEvent.preventDefault();
+        console.log(this.state.multiline);
+        // const csv = formEvent.target.elements.csv.value.trim();
+        // console.log(csv);
+        // this.setState(() => ({ csv }));
+    }
 
     render() {
         const { classes } = this.props;
@@ -80,7 +129,7 @@ class Import extends React.Component {
                                 </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                primary="Step 1" button component="a" href="https://www.google.com"
+                                primary="Step 1" component="a" href="https://www.google.com"
                                 secondary={'Install the REFlex - Arena/Battleground Historian addon from https://wow.curseforge.com'}
                                 />
                             </ListItem>
@@ -151,22 +200,25 @@ class Import extends React.Component {
                     <Grid item xs={false} md={1}>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <TextField
-                        id="outlined-multiline-flexible"
-                        label="Paste CSV here"
-                        multiline
-                        rowsMax="10"
-                        value={this.state.multiline}
-                        onChange={this.handleChange('multiline')}
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                        />
-                        <br />
-                        <Button variant="contained" color="default" className={classes.button}>
-                            Import &nbsp;
-                            <CloudUploadIcon className={classes.rightIcon} />
-                        </Button>
+                        <form onSubmit={this.handleImport}>
+                            <TextField
+                            id="outlined-multiline-flexible"
+                            label="Paste CSV here"
+                            multiline
+                            name="csv"
+                            rowsMax="10"
+                            value={this.state.multiline}
+                            onChange={this.handleChange('multiline')}
+                            className={classes.textField}
+                            margin="normal"
+                            variant="outlined"
+                            />
+                            <br />
+                            <Button variant="contained" color="default" className={classes.button} onClick={this.handleImport}>
+                                Import &nbsp;
+                                <CloudUploadIcon className={classes.rightIcon} />
+                            </Button>
+                        </form>
                     </Grid>
                     <Grid item xs={false} md={1}>
                     </Grid>
