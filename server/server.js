@@ -5,6 +5,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const Data = require('./data');
 require("dotenv").config();
+const UUID = require('uuid/v4');
 
 const API_PORT = 3001;
 const app = express();
@@ -46,20 +47,25 @@ app.use(cors());
 // adds new data to database
 router.post('/putData', (req, res) => {
     let data = new Data();
-
+    let newUUID = null;
+    // const { id, message } = req.body;
     const { id, message } = req.body;
 
     if ((!id && id !== 0)) {
-        return res.json({
-            success: false,
-            error: 'INVALID INPUTS',
-        });
+        newUUID = UUID();
+        console.log(newUUID);
     }
+
     data.message = message;
-    data.id = id;
+    data.id = id || newUUID;
     data.save(err => {
         if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true });
+        console.log(data.message);
+        return res.json({ 
+            success: true, 
+            id: data.id, 
+            message: data.message 
+        });
     });
 });
 

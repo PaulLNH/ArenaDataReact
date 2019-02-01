@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // Timestamp;Map;PlayersNumber;TeamComposition;EnemyComposition;Duration;Victory;KillingBlows;Damage;Healing;Honor;RatingChange;MMR;EnemyMMR;Specialization;isRated
 const DataSchema = new Schema(
   {
-    id: Number,
+    id: String,
     message: String,
   },
   { timestamps: true }

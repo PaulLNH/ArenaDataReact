@@ -1,10 +1,10 @@
 import React from "react";
 import { Bar } from "@nivo/bar";
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
+// const styles = {
+//   fontFamily: "sans-serif",
+//   textAlign: "center"
+// };
 
 const data = [
   {
@@ -59,23 +59,23 @@ const data = [
   }
 ];
 
-const axisBottom = {
-  tickSize: 5,
-  tickPadding: 5,
-  tickRotation: 0,
-  legend: "Map",
-  legendPosition: "middle",
-  legendOffset: 32
-};
+// const axisBottom = {
+//   tickSize: 5,
+//   tickPadding: 5,
+//   tickRotation: 0,
+//   legend: "Map",
+//   legendPosition: "middle",
+//   legendOffset: 32
+// };
 
-const axisLeft = {
-  tickSize: 5,
-  tickPadding: 5,
-  tickRotation: 0,
-  legend: "Wins / Loss",
-  legendPosition: "middle",
-  legendOffset: -40
-};
+// const axisLeft = {
+//   tickSize: 5,
+//   tickPadding: 5,
+//   tickRotation: 0,
+//   legend: "Wins / Loss",
+//   legendPosition: "middle",
+//   legendOffset: -40
+// };
 
 const theme = {
   background: "#303030",
