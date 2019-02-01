@@ -3,6 +3,7 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -36,6 +37,9 @@ const styles = theme => ({
         margin: `${theme.spacing.unit * 2}px 0 ${theme.spacing.unit * 4}px`,
         justify: 'center',
       },
+      links: {
+          paddingLeft: "16px",
+      }
   });
 
 //   const UUID = "ddeb27fb-d9a0-4624-be4d-4615062daed4";
@@ -52,16 +56,10 @@ class Import extends React.Component {
             jsonData: [],
         };
     }
-    // state = {
-    //     multiline: '',
-    //     clientID: '',
-    //     csvData: '',
-    //     jsonData: [],
-    //   };
 
     componentDidMount() {
-        let clientID = JSON.parse(localStorage.getItem("clientID"));
-        if (clientID !== null) {
+        if (!localStorage.hasOwnProperty("clientID")) {
+            let clientID = JSON.parse(localStorage.getItem("clientID"));
             this.setState( { clientID } );
         }
     };
@@ -74,38 +72,24 @@ class Import extends React.Component {
 
     // Import CSV
     putDataToDB(dataToImport) {
-        console.log(`Uploading: ${this.state.multiline}`);
-        if (this.state.clientID !== null) {
-            axios.post("http://localhost:3001/api/putData", {
+            axios.post("http://localhost:3001/api/import", {
                 id: this.state.clientID,
                 message: dataToImport,
                 })
-                // .then(res => this.setState({ data: res.data }));
-                .then(res => console.log(res));
-        } else {
-            axios.post("http://localhost:3001/api/putData", {
-                message: dataToImport,
-                })
-                // .then(res => this.setState({ data: res.data }));
                 .then(res => {
                     console.log(res);
                     localStorage.setItem('clientID', res.data.id);
+                    this.setState({ clientID: res.data.id });
                 });
-        }
     };
 
     handleImport(formEvent) {
         formEvent.preventDefault();
-        console.log(this.state.multiline);
         this.putDataToDB(this.state.multiline);
-        // const csv = formEvent.target.elements.csv.value.trim();
-        // console.log(csv);
-        // this.setState(() => ({ csv }));
     };
 
     render() {
         const { classes } = this.props;
-        // const { value } = this.state;
     
         return (
             <div className={classes.root}>
@@ -132,17 +116,18 @@ class Import extends React.Component {
                                     <Check />
                                 </Avatar>
                                 </ListItemAvatar>
-                                <a
-                                href="https://www.google.com"
+                                <Link
+                                href="https://wow.curseforge.com/projects/reflex-battleground-historian"
+                                color="inherit"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                // className={classes.hrefLink}
+                                className={classes.links}
                                 >
                                     <ListItemText
                                     primary="Step 1" 
                                     secondary={'Install the REFlex - Arena/Battleground Historian addon from https://wow.curseforge.com'}
                                     />
-                                </a>
+                                </Link>
                             </ListItem>
                             <Divider />
                             <ListItem>
@@ -200,7 +185,7 @@ class Import extends React.Component {
                                 </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
-                                primary="Step 1"
+                                primary="Step 6"
                                 secondary={'Click on IMPORT'}
                                 />
                             </ListItem>

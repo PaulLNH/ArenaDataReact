@@ -45,19 +45,23 @@ app.use(cors());
 
 // CREATE
 // adds new data to database
-router.post('/putData', (req, res) => {
+router.post('/import', (req, res) => {
     let data = new Data();
     let newUUID = null;
     // const { id, message } = req.body;
     const { id, message } = req.body;
 
-    if ((!id && id !== 0)) {
+    if ((id === null)) {
         newUUID = UUID();
-        console.log(newUUID);
+        console.log(`Generating new UUID for client: ${newUUID}`);
+        data.id = newUUID;
+    } else {
+        console.log(`Import request from client id: ${id}`);
+        data.id = id;
     }
 
     data.message = message;
-    data.id = id || newUUID;
+    // data.id = id || newUUID;
     data.save(err => {
         if (err) return res.json({ success: false, error: err });
         console.log(data.message);
