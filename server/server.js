@@ -6,6 +6,7 @@ const cors = require('cors');
 const Data = require('./data');
 require("dotenv").config();
 const UUID = require('uuid/v4');
+const Papa = require("papaparse");
 
 const API_PORT = 3001;
 const app = express();
@@ -40,6 +41,21 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 // Enable CORS on all routes
 app.use(cors());
+
+function parseCSV(data) {
+    Papa.parse(data, {
+        header: true,
+        delimiter: ';',
+        download: true,
+        skipEmptyLines: true,
+        step: function(row) {
+            console.log("Row:", row.data);
+        },
+        complete: function() {
+            console.log("All done!");
+        }
+      });
+};
 
 // CRUD Routes: 
 

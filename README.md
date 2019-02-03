@@ -19,7 +19,7 @@ This app is still in production and the prerequisites will be updated once the d
 Clone the repo by openeing your Git Bash terminal and typing in (a directory you wish to house this application): `https://github.com/PaulLNH/ArenaDataReact.git`
 
 ```
-This app is still in production and the installation notes will be updated once the development enters beta.
+Run a git clone on repo and type yarn start in commandline
 ```
 
 ## Running the tests
