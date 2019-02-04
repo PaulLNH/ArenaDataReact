@@ -51,7 +51,7 @@ class Import extends React.Component {
         this.submitDataToDB = this.submitDataToDB.bind(this);
         this.state = {
             multiline: '',
-            clientID: null,
+            clientID: undefined,
             csvData: '',
             jsonData: [],
         };
@@ -72,16 +72,19 @@ class Import extends React.Component {
 
     // Import CSV
     submitDataToDB(dataToImport) {
-        console.log(`Submitting to API: ${dataToImport}`);
-            axios.post("http://localhost:3001/api/import", {
-                id: this.state.clientID,
-                message: dataToImport,
-                })
-                .then(res => {
-                    console.log(res);
-                    localStorage.setItem('clientID', res.data.id);
-                    this.setState({ clientID: res.data.id });
-                });
+        console.log(`Submitting request to API: ${dataToImport}`);
+        axios.post("http://localhost:3001/api/import", {
+            id: this.state.clientID,
+            message: dataToImport,
+            })
+            .then(res => {
+                console.log(res);
+                if (this.state.clientID === undefined) {
+                    console.log(`Setting clientID to: ${res.data._id}`);
+                    localStorage.setItem('clientID', res.data._id);
+                    this.setState({ clientID: res.data._id });
+                }
+            });
     };
 
     handleImport(formEvent) {

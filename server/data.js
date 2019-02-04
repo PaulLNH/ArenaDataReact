@@ -6,12 +6,23 @@ const Schema = mongoose.Schema;
 // Timestamp;Map;PlayersNumber;TeamComposition;EnemyComposition;Duration;Victory;KillingBlows;Damage;Healing;Honor;RatingChange;MMR;EnemyMMR;Specialization;isRated
 const DataSchema = new Schema(
   {
-    id: String,
-    message: String,
+    // timestamp: {
+    //     type: Number, 
+    //     required: [true, "can't be blank"], 
+    //     min: 1000000000,
+    //     max: 9999999999,
+    //     index: true,
+    //     unique: true,
+    // },
+    message: {
+        type: String,
+    },
   },
   { timestamps: true }
 );
-
+// 1000000000
+// 9999999999
+// 1547730424
 // export the new Schema so we could modify it using Node.js
 module.exports = mongoose.model("Data", DataSchema);
 
