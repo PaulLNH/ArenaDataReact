@@ -70,10 +70,12 @@ router.post('/import', (req, res) => {
     if ((id === null)) {
         newUUID = UUID();
         console.log(`Generating new UUID for client: ${newUUID}`);
-        data.id = newUUID;
+        // data.id = newUUID;
+        data.Types.ObjectId(newUUID);
     } else {
         console.log(`Import request from client id: ${id}`);
-        data.id = id;
+        // data.id = id;
+        data.Types.ObjectId(id);
     }
 
     data.message = message;

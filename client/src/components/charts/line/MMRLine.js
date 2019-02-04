@@ -1,6 +1,59 @@
 import { render } from 'react-dom'
 import { ResponsiveLine } from '@nivo/line'
 
+
+const data = [
+    {
+        timestamp: 1547732654,
+        MMR: 2240,
+        EnemyMMR: 2262,
+    },
+    {
+        timestamp: 1547732359,
+        MMR: 2282,
+        EnemyMMR: 2220,
+    },
+    {
+        timestamp: 1547731914,
+        MMR: 2308,
+        EnemyMMR: 2326,
+    },
+    {
+        timestamp: 1547731552,
+        MMR: 2275,
+        EnemyMMR: 2294,
+    },
+    {
+        timestamp: 1547731346,
+        MMR: 2244,
+        EnemyMMR: 2252,
+    },
+    {
+        timestamp: 1547731100,
+        MMR: 2277,
+        EnemyMMR: 2258,
+    },
+    {
+        timestamp: 1547730927,
+        MMR: 2307,
+        EnemyMMR: 2303,
+    },
+    {
+        timestamp: 1547730735,
+        MMR: 2330,
+        EnemyMMR: 2360,
+    },
+    {
+        timestamp: 1547730424,
+        MMR: 2300,
+        EnemyMMR: 2305,
+    },
+    {
+        timestamp: 1547729944,
+        MMR: 2324,
+        EnemyMMR: 2351,
+    },
+  ];
 // make sure parent container have a defined height when using responsive component,
 // otherwise height will be 0 and no chart will be rendered.
 // website examples showcase many properties, you'll often use just a few of them.
@@ -8,7 +61,7 @@ const MMRLine = () => (
 render(
     <div>
     <ResponsiveLine
-        data={/* see data tab */}
+        data={data}
         margin={{
             "top": 50,
             "right": 110,
@@ -24,8 +77,8 @@ render(
             "min": "auto",
             "max": "auto"
         }}
-        axisTop=null
-        axisRight=null
+        axisTop={null}
+        axisRight={null}
         axisBottom={{
             "orient": "bottom",
             "tickSize": 5,
@@ -85,4 +138,4 @@ render(
 )
 );
 
-export default Bar
+export default MMRLine;

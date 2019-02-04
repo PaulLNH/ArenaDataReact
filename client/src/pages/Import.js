@@ -72,6 +72,7 @@ class Import extends React.Component {
 
     // Import CSV
     submitDataToDB(dataToImport) {
+        console.log(`Submitting to API: ${dataToImport}`);
             axios.post("http://localhost:3001/api/import", {
                 id: this.state.clientID,
                 message: dataToImport,
@@ -196,7 +197,7 @@ class Import extends React.Component {
                     <Grid item xs={false} md={1}>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <form onSubmit={this.handleImport}>
+                        <form onSubmit={this.handleImport} >
                             <TextField
                             id="outlined-multiline-flexible"
                             label="Paste CSV here"
