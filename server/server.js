@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const Data = require('./data');
+const Arena = require('./data');
 require("dotenv").config();
 // const UUID = require('uuid/v4');
-// const Papa = require("papaparse");
+const Papa = require("papaparse");
 
 const API_PORT = 3001;
 const app = express();
@@ -43,52 +44,22 @@ app.use(logger("dev"));
 // Enable CORS on all routes
 app.use(cors());
 
-// function parseCSV(data) {
-//     Papa.parse(data, {
-//         header: true,
-//         delimiter: ';',
-//         download: true,
-//         skipEmptyLines: true,
-//         step: function(row) {
-//             console.log("Row:", row.data);
-//         },
-//         complete: function() {
-//             console.log("All done!");
-//         }
-//       });
-// };
+function parseCSV(data) {
+    Papa.parse(data, {
+        header: true,
+        delimiter: ';',
+        download: true,
+        skipEmptyLines: true,
+        step: function(row) {
+            console.log("Row:", row.data);
+        },
+        complete: function() {
+            console.log("All done!");
+        }
+      });
+};
 
-// CRUD Routes: 
-
-// OLD IMPORT ROUTE:
-// router.post('/import', (req, res) => {
-//     let data = new Data();
-//     let newUUID = null;
-//     const { id, message } = req.body;
-
-//     if ((id === null)) {
-//         newUUID = UUID();
-//         console.log(`Generating new UUID for client: ${newUUID}`);
-//         data.id = newUUID;
-//     } else {
-//         console.log(`Import request from client id: ${id}`);
-//         data.id = id;
-//     }
-
-//     data.message = message;
-//     data.save(err => {
-//         if (err) return res.json({ success: false, error: err });
-//         console.log(data.message);
-//         return res.json({ 
-//             success: true, 
-//             id: data.id, 
-//             message: data.message 
-//         });
-//     });
-// });
-
-// CREATE
-// adds new data to database
+// Primary route, creates a new document if none exists, updates document if one
 router.post('/import', (req, res) => {
     console.log(`import endpoint hit, parsing request...`);
     const { id, message } = req.body;
@@ -98,15 +69,53 @@ router.post('/import', (req, res) => {
     let query = id ? { _id: id } : { _id: new mongoose.mongo.ObjectID() };
     console.log(`Searching on query: ${JSON.stringify(query)}`);
     
-    let update = {
-        message: message,
-    };
+    // let update = {$push : {games: {
+    //         timestamp: 1547732654,
+    //         map: 1552,
+    //         playersNumber: 6,
+    //         teamComposition: "MAGE-Frost,PRIEST-Discipline,ROGUE-Assassination",
+    //         enemyComposition: "MONK-Windwalker,PALADIN-Holy,WARRIOR-Fury",
+    //         duration: 151,
+    //         victory: true,
+    //         killingBlows: 0,
+    //         damage: 364332,
+    //         healing: 0,
+    //         honor: 0,
+    //         ratingChange: 11,
+    //         MMR: 2240,
+    //         enemyMMR: 2262,
+    //         specialization: "Frost",
+    //         rated: true,
+    //         }
+    //     }
+    // };
+
+    let update = {$push : {games: {
+        timestamp: 1547732359,
+        map: 980,
+        playersNumber: 6,
+        teamComposition: "MAGE-Frost,PRIEST-Discipline,ROGUE-Assassination",
+        enemyComposition: "MONK-Windwalker,PALADIN-Holy,WARRIOR-Fury",
+        duration: 211,
+        victory: false,
+        killingBlows: 0,
+        damage: 507220,
+        healing: 61491,
+        honor: 0,
+        ratingChange: -15,
+        MMR: 2282,
+        enemyMMR: 2220,
+        specialization: "Frost",
+        rated: true,
+        }
+    }
+};
+
     console.log(`Updating: ${JSON.stringify(update)}`);
 
-    // const options = { runValidators: true, upsert: true, new: true, setDefaultsOnInsert: true };
     const options = { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true };
 
-    Data.findOneAndUpdate(
+    Arena.findOneAndUpdate(
         query,
         update,
         options,
@@ -116,7 +125,7 @@ router.post('/import', (req, res) => {
             return res.json({
                 success: true,
                 _id: doc._id,
-                message: doc.message,
+                games: doc.games,
             });
         }
     );
@@ -124,32 +133,32 @@ router.post('/import', (req, res) => {
 
 // READ
 // fetches all avaiable data in database
-router.get('/getData', (req, res) => {
-    Data.find((err, data) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true, data: data });
-    });
-});
+// router.get('/getData', (req, res) => {
+//     Data.find((err, data) => {
+//         if (err) return res.json({ success: false, error: err });
+//         return res.json({ success: true, data: data });
+//     });
+// });
 
 // UPDATE
 // overwrites existing data in database
-router.post('/updateData', (req, res) => {
-    const { id, update } = req.body;
-    Data.findOneAndUpdate(id, update, err => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true });
-    });
-});
+// router.post('/updateData', (req, res) => {
+//     const { id, update } = req.body;
+//     Data.findOneAndUpdate(id, update, err => {
+//         if (err) return res.json({ success: false, error: err });
+//         return res.json({ success: true });
+//     });
+// });
 
 // DELETE
 // removes existing data in database
-router.post('/deleteData', (req, res) => {
-    const { id } = req.body;
-    Data.findOneAndDelete(id, err => {
-        if (err) return res.send(err);
-        return res.json({ success: true });
-    });
-});
+// router.post('/deleteData', (req, res) => {
+//     const { id } = req.body;
+//     Data.findOneAndDelete(id, err => {
+//         if (err) return res.send(err);
+//         return res.json({ success: true });
+//     });
+// });
 
 // append /api for our http requests
 app.use('/api', router);
