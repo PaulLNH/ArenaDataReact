@@ -16,6 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import axios from 'axios';
+import Papa from 'papaparse';
 
 const styles = theme => ({
     root: {
@@ -49,6 +50,7 @@ class Import extends React.Component {
         super(props);
         this.handleImport = this.handleImport.bind(this);
         this.submitDataToDB = this.submitDataToDB.bind(this);
+        this.parseCSV = this.parseCSV.bind(this);
         this.state = {
             multiline: '',
             clientID: undefined,
@@ -70,12 +72,35 @@ class Import extends React.Component {
         });
       };
 
+    parseCSV(csv) {
+        console.log(`Parsing data...`);
+        console.log(csv);
+        Papa.parse(csv, {
+            header: true,
+            delimiter: ';',
+            // download: true,
+            skipEmptyLines: true,
+            dynamicTyping: true,
+            // step: function(row) {
+            //     console.log("Row:", row.data);
+            //     updateDBFromCSV(id, row.data);
+            // },
+            complete: async (results) => {
+                console.log("All done!");
+                await this.setState({ jsonData: results.data });
+                console.log(this.state.jsonData);
+            }
+          });
+    };
+
     // Import CSV
-    submitDataToDB(dataToImport) {
-        console.log(`Submitting request to API: ${dataToImport}`);
+    async submitDataToDB(dataToImport) {
+        // console.log(dataToImport);
+        await this.parseCSV(dataToImport);
+        // console.log(`Submitting request to API: ${dataToImport}`);
         axios.post("http://localhost:3001/api/import", {
             id: this.state.clientID,
-            message: dataToImport,
+            games: this.state.jsonData,
             })
             .then(res => {
                 console.log(res);
@@ -200,7 +225,7 @@ class Import extends React.Component {
                     <Grid item xs={false} md={1}>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <form onSubmit={this.handleImport} >
+                        <form  >
                             <TextField
                             id="outlined-multiline-flexible"
                             label="Paste CSV here"
