@@ -82,6 +82,29 @@ router.put('/import', async (req, res) => {
     );
 });
 
+router.get('/games', async (req, res) => {
+    console.log(`games endpoint hit, parsing request...`);
+    const { id } = req.query;
+    console.log(`id: ${id}`);
+    // console.log(`Request Body:`);
+    // console.log(req.query.id);
+    // const query = await { _id: id };
+    // console.log(`Retreving game data for ${query._id}`);
+    
+    // let update = {$set : {games: games}};
+    // console.log(`Pushing to DB under ID: ${query._id}: ${JSON.stringify(update)}`);
+    
+    Arena.findById(id, function (err, doc) {
+            if (err) return res.json({ success: false, error: err });
+            console.log(`Sending document ${id} to client.`);
+            return res.json({
+                success: true,
+                data: doc,
+            });
+        }
+    );
+});
+
 // append /api for our http requests
 app.use('/api', router);
 

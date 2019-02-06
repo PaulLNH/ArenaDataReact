@@ -134,6 +134,10 @@ class Match extends React.Component {
     expanded: null,
   };
 
+  componentDidMount() {
+    console.log(`======================= Match.js =======================`);
+  };
+
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
@@ -192,7 +196,7 @@ class Match extends React.Component {
     let result = [];
     if (MMRChange > 0) {
         result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingUp color="primary" fontSize="large" />}<Typography fontSize="2em" color="primary"  key={key + MMRChange}>&nbsp;&nbsp;+{MMRChange}</Typography></div>);
-    } else if (MMRChange === '0') {
+    } else if (MMRChange === 0) {
         result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingFlat color="disabled" fontSize="large" />}<Typography className={classes.MMRFlat}  key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
     } else if (MMRChange < 0) {
         result.push(<div key={`MMR${key}-${MMRChange}`} >{<TrendingDown color="error" fontSize="large" />}<Typography className={classes.MMRDown} color="error" key={key + MMRChange}>&nbsp;&nbsp;{MMRChange}</Typography></div>);
@@ -201,7 +205,7 @@ class Match extends React.Component {
 };
 
 displayMapName = (map, key, classes) => {
-    switch (map) {
+    switch (map.toString()) {
         case '572':
             // code for RoL
             // win ? mapWL.RoL.win++ : mapWL.RoL.loss++
@@ -258,7 +262,7 @@ displayMapName = (map, key, classes) => {
 };
 
 displayMapImage = (map) => {
-    switch (map) {
+    switch (map.toString()) {
         case '572':
             // code for RoL
             return {src: 'RoL'};
@@ -295,6 +299,25 @@ displayMapImage = (map) => {
     }
 };
 
+// DATA FROM PROPS:
+// Damage: 364332
+// Duration: 151
+// EnemyComposition: "MONK-Windwalker,PALADIN-Holy,WARRIOR-Fury"
+// EnemyMMR: 2262
+// Healing: 0
+// Honor: 0
+// KillingBlows: 0
+// MMR: 2240
+// Map: 1552
+// PlayersNumber: 6
+// RatingChange: 0
+// Specialization: "Frost"
+// TeamComposition: "MAGE-Frost,PRIEST-Discipline,ROGUE-Assassination"
+// Timestamp: 1547732754
+// Victory: true
+// isRated: true
+// _id: "5c5b156d6902c630987cb3b6"
+
   render() {
     const { match } = this.props;
     const { classes } = this.props;
@@ -324,7 +347,7 @@ displayMapImage = (map) => {
                         Victory!
                     */}
                     <Grid item xs={1} sm={1} md={1}>
-                        {match.Victory === 'true' ? 
+                        {match.Victory === true ? 
                             <Typography className={classes.victory}>Victory!</Typography> : 
                             <Typography className={classes.defeat}>Defeat!</Typography>
                         }

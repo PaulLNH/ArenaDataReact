@@ -3,6 +3,7 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
+import { Route } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,6 +16,7 @@ import Check from '@material-ui/icons/Check';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Home from '../pages/Home';
 import axios from 'axios';
 import Papa from 'papaparse';
 
@@ -53,17 +55,15 @@ class Import extends React.Component {
         this.parseCSV = this.parseCSV.bind(this);
         this.state = {
             multiline: '',
-            clientID: undefined,
-            csvData: '',
+            clientID: this.props.id,
+            success: false,
             jsonData: [],
         };
     }
 
     componentDidMount() {
-        if (localStorage.hasOwnProperty("clientID")) {
-            let clientID = localStorage.getItem("clientID");
-            this.setState( { clientID } );
-        }
+        console.log(`======================= Import.js =======================`);
+        console.log(`ID is set to ${this.state.clientId}`);
     };
 
     handleChange = name => event => {
@@ -109,18 +109,27 @@ class Import extends React.Component {
                     localStorage.setItem('clientID', res.data._id);
                     this.setState({ clientID: res.data._id });
                 }
+                if (res.data.success) {
+                    console.log(`Succsfully imported data!`);
+                    this.setState({ success: res.data.success });
+                }
             });
     };
 
-    handleImport(formEvent) {
+    async handleImport(formEvent) {
         formEvent.preventDefault();
-        this.submitDataToDB(this.state.multiline);
+        await this.submitDataToDB(this.state.multiline);
     };
 
     render() {
         const { classes } = this.props;
     
         return (
+            this.state.success ? 
+                <Home 
+                id={this.state.clientID} 
+                /> 
+            : 
             <div className={classes.root}>
                 <Typography variant="h4" className={classes.title}>
                     How to Import your data from REFlex:

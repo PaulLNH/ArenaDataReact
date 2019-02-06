@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-// import CircularProgress from '@material-ui/core/CircularProgress';
-import Loading from '../components/Loading';
-
-import Match from '../components/Match';
+import Import from '../pages/Import';
+import Dashboard from '../pages/Dashboard';
 
 const styles = theme => ({
     root: {
@@ -22,63 +20,31 @@ const styles = theme => ({
 
 
 class Home extends Component {
-
   constructor(props) {
-    // Call super class
     super(props);
-
-    // Bind this to function updateData (This eliminates the error)
-    this.updateData = this.updateData.bind(this);
+    this.state = {
+      clientID: this.props.id,
+    };
   }
-
-  state = {
-    data: [],
-    loaded: false,
-  };
 
   // This imports local CSV seed data for development, beta release will need to get csv from the Import.js component
-  componentWillMount() {
-    let self = this; // bind this so updateData will have correct context in setTimeout
-    // Your parse code, but not seperated in a function
-    var csvFilePath = require("../seed.csv");
-    var Papa = require("papaparse/papaparse.min.js");
-
-    // Running setTimeout to run parser on a seperate thread
-    setTimeout( function() {
-        Papa.parse(csvFilePath, {
-          header: true,
-          delimiter: ';',
-          download: true,
-          skipEmptyLines: true,
-          // step: this.updateData,
-          // Calling our context of componentWillMount
-          complete: self.updateData
-        });
-    });
-  }
-
-  updateData(result) {
-    const data = result.data;
-    // Here this is available and we can call this.setState (since it's binded in the constructor)
-    this.setState({
-        data: data,
-        loaded: true,
-    }); // or shorter ES syntax: this.setState({ data });
+  componentDidMount() {
+    console.log(`======================= Home.js =======================`);
+    // await this.setState({ clientID: this.props.id });
+    console.log(`ID is set to ${this.state.clientID}`);
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, id } = this.props;
     return <div className={classes.root}>
-                {this.state.loaded ? 
-                    this.state.data.map(match => (
-                        <Match 
-                        key={match.Timestamp} 
-                        id={match.Timestamp}
-                        match={match}
-                        />
-                        ))
-                    : <Loading />
-                    
+                { id ? 
+                    <Dashboard 
+                    id={id} 
+                    /> 
+                : 
+                    <Import
+                    id={id} 
+                    /> 
                 }
             </div>
   }

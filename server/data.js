@@ -4,12 +4,14 @@ const Schema = mongoose.Schema;
 
 // this will be the database's data structure 
 // Timestamp;Map;PlayersNumber;TeamComposition;EnemyComposition;Duration;Victory;KillingBlows;Damage;Healing;Honor;RatingChange;MMR;EnemyMMR;Specialization;isRated
-const DataSchema = new Schema(
-  {
+const DataSchema = new Schema({
+    _id: {
+        type: String
+    },
     games: [{
         Timestamp: {
-            type: Number, 
-            required: [true, "can't be blank"], 
+            type: Number,
+            required: [true, "can't be blank"],
             min: 1000000000,
             max: 9999999999,
         },
@@ -29,9 +31,9 @@ const DataSchema = new Schema(
         Specialization: String,
         isRated: Boolean,
     }],
-  },
-  { timestamps: true }
-);
+}, {
+    timestamps: true
+});
 
 // export the new Schema so we could modify it using Node.js
 module.exports = mongoose.model("Arena", DataSchema);
