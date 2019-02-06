@@ -12,8 +12,6 @@ const DataSchema = new Schema(
             required: [true, "can't be blank"], 
             min: 1000000000,
             max: 9999999999,
-            index: true,
-            unique: true,
         },
         Map: Number,
         PlayersNumber: Number,

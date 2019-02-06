@@ -46,30 +46,33 @@ app.use(logger("dev"));
 // Enable CORS on all routes
 app.use(cors());
 
+
+// TODO: Race condition between findByIdAndRemove and findOneAndUpdate. Possibly nest these calls?
 // Primary route, creates a new document if none exists, updates document if one
-router.post('/import', (req, res) => {
+router.put('/import', async (req, res) => {
     console.log(`import endpoint hit, parsing request...`);
     const { id, games } = req.body;
     console.log(`req.body.id: ${id}`);
     console.log(`req.body.games:`);
     console.log(games);
     
-    const query = id ? { _id: id } : { _id: new mongoose.mongo.ObjectID() };
+
+    const query = await id ? { _id: id } : { _id: new mongoose.mongo.ObjectID() };
     console.log(`Searching on query: ${JSON.stringify(query)}`);
     
-    // const options = { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true, multi: true, context: 'query' };
     const options = { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true, };
 
-    let update = {$push : {games: games}};
+    let update = {$set : {games: games}};
     // console.log(`Pushing to DB under ID: ${query._id}: ${JSON.stringify(update)}`);
-
+    
     Arena.findOneAndUpdate(
         query,
         update,
         options,
         function (err, doc) {
-            console.log(doc);
+            // console.log(doc);
             if (err) return res.json({ success: false, error: err });
+            console.log(`Document ${query._id} reset to newest import.`);
             return res.json({
                 success: true,
                 _id: doc._id,

@@ -98,7 +98,7 @@ class Import extends React.Component {
         // console.log(dataToImport);
         await this.parseCSV(dataToImport);
         // console.log(`Submitting request to API: ${dataToImport}`);
-        axios.post("http://localhost:3001/api/import", {
+        axios.put("http://localhost:3001/api/import", {
             id: this.state.clientID,
             games: this.state.jsonData,
             })
