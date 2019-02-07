@@ -21,7 +21,7 @@ const styles = {
 
 class LoginButton extends Component {
   state = {
-    auth: false,
+    auth: true,
     user: null,
     menuAnchorEl: null,
   };

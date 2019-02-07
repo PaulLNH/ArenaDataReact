@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import ReactLoading from 'react-loading';
 
 const styles = theme => ({
@@ -13,19 +12,7 @@ const styles = theme => ({
 function CircularIndeterminate(props) {
 //   const { classes } = props;
   return (
-
-    <Grid
-    container
-    spacing={0}
-    direction="column"
-    alignItems="center"
-    justify="center"
-    style={{ minHeight: '100vh' }}
-    >
-        <Grid item xs={3}>
         <ReactLoading type={'spinningBubbles'} color={'#ffffff'} height={'20%'} width={'20%'} />
-        </Grid>   
-    </Grid>
   );
 }
 

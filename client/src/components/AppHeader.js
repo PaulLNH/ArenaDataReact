@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
-import LoginButton from './LoginButton';
+// import LoginButton from './LoginButton';
+import ImportBtn from '../components/ImportBtn';
 
 const styles = {
     root: {
@@ -31,8 +31,6 @@ const styles = {
         flexGrow: 1,
     },
   };
-  
-
 
 class AppHeader extends React.Component {
     state = {
@@ -55,18 +53,15 @@ class AppHeader extends React.Component {
                             Arena Data
                         </Typography>
                         <Tabs value={value} onChange={this.handleTabChange} className={classes.tabs}>
-                            <Tab label="Overview" component={Link} to="/" />
+                            <Tab label="Matches" component={Link} to="/" />
                             <Tab label="Data" component={Link} to="/data" />
                         </Tabs>
-                        <LoginButton />
+                        <ImportBtn />
                     </Toolbar>
                 </AppBar>
             </div>
             );
         }
     };
-    
-    // <Tab label="3v3" component={Link} to="/3v3" />
-    // <Tab label="RBG" component={Link} to="/RBG" />
 
 export default withStyles(styles)(AppHeader);

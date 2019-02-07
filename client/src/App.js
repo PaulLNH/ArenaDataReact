@@ -19,92 +19,13 @@ const styles = theme => ({
 });
 
 class App extends Component {
-// const App = ({ classes }) => (
     state = {
         clientId: localStorage.getItem("clientID") || undefined,  
     };
-
-    // when component mounts, first thing it does is fetch all existing data in our db
-    // then we incorporate a polling logic so that we can easily see if our db has 
-    // changed and implement those changes into our UI
     async componentWillMount() {
         console.log(`======================= App.js =======================`);
-    
-        // if (localStorage.hasOwnProperty("clientID")) {
-        //     let clientID = localStorage.getItem("clientID");
-        //     await this.setState( { clientID } );
         console.log(`ID is set to ${this.state.clientId}`);
-        //     this.getDataFromDB(this.state.clientID);
-        // }
     }
-    
-    // getDataFromDB(id) {
-    //     console.log(`Sending get request w/ id: ${id}`);
-    //     axios.get("http://localhost:3001/api/games", {
-    //         id: id,
-    //         })
-    //         .then(res => {
-    //             console.log(res);
-    //     });
-    // };
-
-    // just a note, here, in the front end, we use the id key of our data object 
-    // in order to identify which we want to Update or delete.
-    // for our back end, we use the object id assigned by MongoDB to modify 
-    // data base entries
-
-    // CRUD FUNCTIONS
-    // CREATE
-    // putDataToDB = message => {
-    //     let currentIds = this.state.data.map(data => data.id);
-    //     let idToBeAdded = 0;
-    //     while (currentIds.includes(idToBeAdded)) {
-    //         ++idToBeAdded;
-    //     }
-
-    //     axios.post("http://localhost:3001/api/putData", {
-    //     id: idToBeAdded,
-    //     message: message
-    //     });
-    // };
-
-    // READ
-    // getDataFromDb = () => {
-    //     fetch("http://localhost:3001/api/getData")
-    //     .then(data => data.json())
-    //     .then(res => this.setState({ data: res.data }));
-    // };
-
-    // UPDATE
-    // updateDB = (idToUpdate, updateToApply) => {
-    //     let objIdToUpdate = null;
-    //     this.state.data.forEach(dat => {
-    //       if (dat.id === idToUpdate) {
-    //         objIdToUpdate = dat._id;
-    //       }
-    //     });
-    
-    //     axios.post("http://localhost:3001/api/updateData", {
-    //       id: objIdToUpdate,
-    //       update: { message: updateToApply }
-    //     });
-    //   };
-
-    // DELETE
-    // deleteFromDB = idTodelete => {
-    //     let objIdToDelete = null;
-    //     this.state.data.forEach(dat => {
-    //     if (dat.id === idTodelete) {
-    //         objIdToDelete = dat._id;
-    //     }
-    //     });
-
-    //     axios.delete("http://localhost:3001/api/deleteData", {
-    //     data: {
-    //         id: objIdToDelete
-    //     }
-    //     });
-    // };
 
     render() {
         const { classes } = this.props;
@@ -112,11 +33,11 @@ class App extends Component {
             <Fragment>
                 <CssBaseline />
         
-                    <AppHeader />
+                    <AppHeader id={this.state.clientId} />
                     <main className={classes.main}>
                         <Route exact path="/" render={(props) => <Home {...props} id={this.state.clientId} />} />
                         <Route exact path="/dashboard" component={Dashboard} />
-                        <Route exact path="/data" component={Data} />
+                        <Route exact path="/data" render={(props) => <Data {...props} id={this.state.clientId} />} />
                         <Route exact path="/import" component={Import} />
                     </main>
         

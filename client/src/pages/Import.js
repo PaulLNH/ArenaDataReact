@@ -3,7 +3,6 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
-import { Route } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -234,7 +233,7 @@ class Import extends React.Component {
                     <Grid item xs={false} md={1}>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <form  >
+                        <form >
                             <TextField
                             id="outlined-multiline-flexible"
                             label="Paste CSV here"
