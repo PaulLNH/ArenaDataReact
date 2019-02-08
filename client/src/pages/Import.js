@@ -54,7 +54,7 @@ class Import extends React.Component {
         this.parseCSV = this.parseCSV.bind(this);
         this.state = {
             multiline: '',
-            clientID: this.props.id,
+            clientID: this.props.id || localStorage.getItem("clientID"),
             success: false,
             jsonData: [],
         };
@@ -103,7 +103,7 @@ class Import extends React.Component {
             })
             .then(res => {
                 console.log(res);
-                if (this.state.clientID === undefined) {
+                if (!this.state.clientID) {
                     console.log(`Setting clientID to: ${res.data._id}`);
                     localStorage.setItem('clientID', res.data._id);
                     this.setState({ clientID: res.data._id });

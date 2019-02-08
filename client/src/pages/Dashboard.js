@@ -42,12 +42,12 @@ class Dashboard extends React.Component {
         this.getDataFromDB = this.getDataFromDB.bind(this);
         this.state = {
             data: [],
-            clientID: this.props.id,
+            clientID: this.props.id || localStorage.getItem("clientID"),
             loading: true,
         };
     };
 
-    async componentDidMount() {
+    async componentWillMount() {
         console.log(`======================= Dashboard.js =======================`);
         console.log(this.state.data);
         console.log(`ID is set to ${this.state.clientID}`);

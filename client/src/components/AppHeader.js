@@ -35,6 +35,7 @@ const styles = {
 class AppHeader extends React.Component {
     state = {
         value: 0,
+        clientID: this.props.id || localStorage.getItem("clientID"),
     };
 
     handleTabChange = (event, value) => {

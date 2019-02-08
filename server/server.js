@@ -140,7 +140,7 @@ router.get('/mapdata', async (req, res) => {
     console.log(`mapdata endpoint hit, processing request...`);
     const {
         id
-    } = req.query;
+    } = req.query || req.body;
     console.log(`id: ${id}`);
 
     Arena.findById(id, function (err, doc) {
@@ -150,61 +150,9 @@ router.get('/mapdata', async (req, res) => {
         });
         console.log(`Sending document ${id} to client.`);
         let total = doc.games.length;
-        console.log(doc.games);
+        console.log(doc.games.length);
         let wins = 0;
         let losses = 0;
-        let data = [
-            {
-              map: "RoL",
-              won: 0,
-              lost: 0,
-            },
-            {
-              map: "DS",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "TA",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "TTP",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "BRH",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "NA",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "AF",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "BEA",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "HP",
-              won: 0,
-              lost: 0
-            },
-            {
-              map: "M",
-              won: 0,
-              lost: 0
-            }
-          ];
 
         let RoL = {
             wins: 0,
@@ -248,9 +196,6 @@ router.get('/mapdata', async (req, res) => {
         };
 
         doc.games.forEach(game => {
-            console.log(game);
-            console.log(game["Map"]);
-            console.log(game.Map);
             if (game.Victory) {
                 wins++;
             } else {
@@ -343,6 +288,32 @@ router.get('/mapdata', async (req, res) => {
                     break;
             }
         });
+
+        console.log(`SENDING MAPDATA TO CLIENT:`);
+        console.log(`TOTAL: ${total}`);
+        console.log(`WINS: ${wins}`);
+        console.log(`LOSSES: ${losses}`);
+        console.log(`ROL:`);
+        console.log(RoL);
+        console.log(`DS:`);
+        console.log(DS);
+        console.log(`TA:`);
+        console.log(TA);
+        console.log(`TTP:`);
+        console.log(TTP);
+        console.log(`BRHA:`);
+        console.log(BRHA);
+        console.log(`NA:`);
+        console.log(NA);
+        console.log(`AF:`);
+        console.log(AF);
+        console.log(`BEA:`);
+        console.log(BEA);
+        console.log(`HP:`);
+        console.log(HP);
+        console.log(`M:`);
+        console.log(M);
+
 
         return res.json({
             success: true,

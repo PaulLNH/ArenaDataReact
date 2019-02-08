@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import MapWLStackedBar from '../components/charts/bar/MapWLStackedBar';
 import DivergingStacked from '../components/charts/bar/divergingStacked';
 import { Typography } from '@material-ui/core';
 import ImportBtn from '../components/ImportBtn';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
   root: {
@@ -23,6 +23,23 @@ const styles = theme => ({
     // justifyContent: "center",
     marginLeft: '-22%',
   },
+  progress: {
+    // margin: theme.spacing.unit * 2,
+    size: 40,
+    left: -10,
+    top: 10,
+    thickness: 6,
+    marginLeft: '49%',
+    color: 'white',
+  },
+  chartTitle: {
+    flex: 1,
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: "center",
+  },
 });
 
 class Data extends Component {
@@ -30,12 +47,14 @@ class Data extends Component {
         super(props);
         this.getDivergingMapData = this.getDivergingMapData.bind(this);
         this.state = {
-            clientID: this.props.id,
+            clientID: this.props.id || localStorage.getItem("clientID"),
             divergingMapData: [],
+            divergingMapLoading: true,
         };
     };
 
-    async componentDidMount() {
+    async componentWillMount() {
+        this.setState({ divergingMapLoading: true });
         console.log(`======================= App.js =======================`);
         console.log(`ID is set to ${this.state.clientID}`);
         await this.getDivergingMapData(this.state.clientID);
@@ -51,7 +70,7 @@ class Data extends Component {
             .then(res => {
                 console.log(res.data);
                 if (res.data.success) {
-                    this.setState({ divergingMapData: res.data, loading: false });
+                    this.setState({ divergingMapData: res.data, divergingMapLoading: false });
                 }
         });
     };
@@ -70,7 +89,17 @@ class Data extends Component {
                     justify="center"
                 >
                     <div className={classes.root} >
-                        <DivergingStacked data={this.state.data} />
+                        {this.state.divergingMapLoading ? (
+                            <div style={{position: 'relative'}} >
+                                <Typography variant="h1" className={classes.chartTitle} >Loading Data...</Typography>
+                                <br />
+                                <CircularProgress className={classes.progress} />
+                            </div>
+                        )
+                        : 
+                            <DivergingStacked data={this.state.divergingMapData} />
+                        }
+                        
                     </div>
                     <div className={classes.root} >
                     </div>
