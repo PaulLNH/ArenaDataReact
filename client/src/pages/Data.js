@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import DivergingStacked from '../components/charts/bar/divergingStacked';
+import MMRLine from '../components/charts/line/MMRLine';
 import { Typography } from '@material-ui/core';
 import ImportBtn from '../components/ImportBtn';
 import axios from 'axios';
@@ -13,6 +14,11 @@ const styles = theme => ({
     width: '500px',
     flexGrow: 1,
     float: 'left',
+  },
+  line: {
+      width: '600px',
+      height: '400px',
+      float: 'right',
   },
   title: {
     // flex: 1,
@@ -46,10 +52,13 @@ class Data extends Component {
     constructor(props) {
         super(props);
         this.getDivergingMapData = this.getDivergingMapData.bind(this);
+        this.getMMRLineData = this.getMMRLineData.bind(this);
         this.state = {
             clientID: this.props.id || localStorage.getItem("clientID"),
             divergingMapData: [],
             divergingMapLoading: true,
+            MMRLineData: [],
+            MMRLineLoading: true,
         };
     };
 
@@ -58,6 +67,7 @@ class Data extends Component {
         console.log(`======================= App.js =======================`);
         console.log(`ID is set to ${this.state.clientID}`);
         await this.getDivergingMapData(this.state.clientID);
+        await this.getMMRLineData(this.state.clientID);
     };
 
     getDivergingMapData(id) {
@@ -71,6 +81,21 @@ class Data extends Component {
                 console.log(res.data);
                 if (res.data.success) {
                     this.setState({ divergingMapData: res.data, divergingMapLoading: false });
+                }
+        });
+    };
+
+    getMMRLineData(id) {
+        console.log(`Sending get request w/ id: ${id}`);
+        axios.get("http://localhost:3001/api/mmrdata", {
+            params: {
+                id: id,
+            }
+            })
+            .then(res => {
+                console.log(res.data);
+                if (res.data.success) {
+                    this.setState({ MMRLineData: res.data, MMRLineLoading: false });
                 }
         });
     };
@@ -101,7 +126,17 @@ class Data extends Component {
                         }
                         
                     </div>
-                    <div className={classes.root} >
+                    <div className={classes.line} >
+                    {this.state.MMRLineLoading ? (
+                        <div style={{position: 'relative'}} >
+                            <Typography variant="h1" className={classes.chartTitle} >Loading Data...</Typography>
+                            <br />
+                            <CircularProgress className={classes.progress} />
+                        </div>
+                    )
+                    : 
+                        <MMRLine data={this.state.MMRLineData}/>
+                    }
                     </div>
                 </Grid>
 

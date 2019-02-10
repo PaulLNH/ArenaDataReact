@@ -335,35 +335,36 @@ router.get('/mapdata', async (req, res) => {
 });
 
 
+router.get('/mmrdata', async (req, res) => {
+    console.log(`mmrdata endpoint hit, processing request...`);
+    const { id } = req.query || req.body;
+    console.log(`id: ${id}`);
 
-// 572
-// code for RoL
-// 617
-// code for DS
-// 980
-// code for TA
-// 1134
-// code for TTP
-// 1504
-// code for BRHA
-// 1505
-// code for NA
-// 1552
-// code for AF
-// 1672
-// code for BEA
-// 1825
-// code for HP
-// 1911
-// code for M
+    Arena.findById(id, function (err, doc) {
+        if (err) return res.json({
+            success: false,
+            error: err
+        });
+        console.log(`Sending document ${id} to client.`);
+        let data = [];
+
+        doc.games.forEach(game => {
+            let obj = {
+                timestamp: game.Timestamp,
+                MMR: game.MMR,
+                EnemyMMR: game.EnemyMMR,
+            };
+            data.push(obj);
+        });
+        console.log(data);
 
 
-// if (err) return res.json({ success: false, error: err });
-// console.log(`Sending document ${id} to client.`);
-// return res.json({
-//     success: true,
-//     data: doc,
-// });
+        return res.json({
+            success: true,
+            data: data,
+        });
+    });
+});
 
 // append /api for our http requests
 app.use('/api', router);
