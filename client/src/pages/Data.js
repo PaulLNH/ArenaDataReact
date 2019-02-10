@@ -112,15 +112,15 @@ class Data extends Component {
         return (
             <div>
             {id ? (
-                /** 
+
                 <Grid
                     container
-                    spacing={0}
+                    spacing={16}
                     direction="row"
                     alignItems="center"
                     justify="center"
                 >
-                */
+
                 <div>
                     <div className={classes.root} >
                         {this.state.divergingMapLoading ? (
@@ -148,9 +148,9 @@ class Data extends Component {
                         }
                     </div>
                 </div>
-                /**
+
                  </Grid>
-                */
+
             ) :
 
                 <Grid

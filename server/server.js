@@ -346,18 +346,30 @@ router.get('/mmrdata', async (req, res) => {
             error: err
         });
         console.log(`Sending document ${id} to client.`);
-        let data = [];
+        let data = [{
+            id: "MMR",
+            data: [],
+        },
+        {
+            id: "Enemy MMR",
+            data: [],
+        }];
 
         doc.games.forEach(game => {
-            let obj = {
-                timestamp: game.Timestamp,
-                MMR: game.MMR,
-                EnemyMMR: game.EnemyMMR,
+            let MMR = {
+                x: game.Timestamp,
+                y: game.MMR,
             };
-            data.push(obj);
+            let EnemyMMR = {
+                x: game.Timestamp,
+                y: game.EnemyMMR,
+            };
+            data[0].data.push(MMR);
+            data[1].data.push(EnemyMMR);
         });
-        console.log(data);
-
+        console.log(JSON.stringify(data));
+        data[0].data.reverse();
+        data[1].data.reverse();
 
         return res.json({
             success: true,
@@ -365,6 +377,25 @@ router.get('/mmrdata', async (req, res) => {
         });
     });
 });
+
+// {
+//     id: "MMR",
+//     data: [
+//       {
+//         x: 1547732654,
+//         y: 2240
+//       },
+//     ]
+//   },
+//   {
+//       id: "Enemy MMR",
+//       data: [
+//         {
+//           x: 1547732654,
+//           y: 2262
+//         },
+//       ]
+// },
 
 // append /api for our http requests
 app.use('/api', router);
