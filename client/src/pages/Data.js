@@ -16,9 +16,9 @@ const styles = theme => ({
     float: 'left',
   },
   line: {
-      width: '600px',
-      height: '400px',
-      float: 'right',
+    width: '600px',
+    height: '400px',
+    float: 'right',
   },
   title: {
     // flex: 1,
@@ -46,6 +46,10 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: "center",
   },
+  App: {
+    position: 'relative',
+    height: '400px',
+    }
 });
 
 class Data extends Component {
@@ -63,8 +67,8 @@ class Data extends Component {
     };
 
     async componentWillMount() {
-        this.setState({ divergingMapLoading: true });
-        console.log(`======================= App.js =======================`);
+        // this.setState({ divergingMapLoading: true });
+        console.log(`======================= Data.js =======================`);
         console.log(`ID is set to ${this.state.clientID}`);
         await this.getDivergingMapData(this.state.clientID);
         await this.getMMRLineData(this.state.clientID);
@@ -78,6 +82,7 @@ class Data extends Component {
             }
             })
             .then(res => {
+                console.log(`mapdata - API Response:`);
                 console.log(res.data);
                 if (res.data.success) {
                     this.setState({ divergingMapData: res.data, divergingMapLoading: false });
@@ -93,6 +98,7 @@ class Data extends Component {
             }
             })
             .then(res => {
+                console.log(`mmrdata - API Response:`);
                 console.log(res.data);
                 if (res.data.success) {
                     this.setState({ MMRLineData: res.data, MMRLineLoading: false });
@@ -106,6 +112,7 @@ class Data extends Component {
         return (
             <div>
             {id ? (
+                /** 
                 <Grid
                     container
                     spacing={0}
@@ -113,6 +120,8 @@ class Data extends Component {
                     alignItems="center"
                     justify="center"
                 >
+                */
+                <div>
                     <div className={classes.root} >
                         {this.state.divergingMapLoading ? (
                             <div style={{position: 'relative'}} >
@@ -124,22 +133,24 @@ class Data extends Component {
                         : 
                             <DivergingStacked data={this.state.divergingMapData} />
                         }
-                        
                     </div>
-                    <div className={classes.line} >
-                    {this.state.MMRLineLoading ? (
-                        <div style={{position: 'relative'}} >
-                            <Typography variant="h1" className={classes.chartTitle} >Loading Data...</Typography>
-                            <br />
-                            <CircularProgress className={classes.progress} />
-                        </div>
-                    )
-                    : 
-                        <MMRLine data={this.state.MMRLineData}/>
-                    }
-                    </div>
-                </Grid>
 
+                    <div className={classes.root} >
+                        {this.state.MMRLineLoading ? (
+                            <div style={{position: 'relative', height: '400px', width: '600px'}} >
+                                <Typography variant="h1" className={classes.chartTitle} >Loading Data...</Typography>
+                                <br />
+                                <CircularProgress className={classes.progress} />
+                            </div>
+                        )
+                        : 
+                            <MMRLine data={this.state.MMRLineData} />
+                        }
+                    </div>
+                </div>
+                /**
+                 </Grid>
+                */
             ) :
 
                 <Grid

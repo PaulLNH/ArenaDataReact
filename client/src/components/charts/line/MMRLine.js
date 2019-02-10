@@ -1,84 +1,206 @@
 import React from "react";
-import { ResponsiveLine } from '@nivo/line'
+import { Line } from '@nivo/line'
 
+const styles = {
+    fontFamily: "sans-serif",
+    textAlign: "center"
+  };
+
+// const data = [
+//     {
+//         timestamp: 1547732654,
+//         MMR: 2240,
+//         EnemyMMR: 2262,
+//     },
+//     {
+//         timestamp: 1547732359,
+//         MMR: 2282,
+//         EnemyMMR: 2220,
+//     },
+//     {
+//         timestamp: 1547731914,
+//         MMR: 2308,
+//         EnemyMMR: 2326,
+//     },
+//     {
+//         timestamp: 1547731552,
+//         MMR: 2275,
+//         EnemyMMR: 2294,
+//     },
+//     {
+//         timestamp: 1547731346,
+//         MMR: 2244,
+//         EnemyMMR: 2252,
+//     },
+//     {
+//         timestamp: 1547731100,
+//         MMR: 2277,
+//         EnemyMMR: 2258,
+//     },
+//     {
+//         timestamp: 1547730927,
+//         MMR: 2307,
+//         EnemyMMR: 2303,
+//     },
+//     {
+//         timestamp: 1547730735,
+//         MMR: 2330,
+//         EnemyMMR: 2360,
+//     },
+//     {
+//         timestamp: 1547730424,
+//         MMR: 2300,
+//         EnemyMMR: 2305,
+//     },
+//     {
+//         timestamp: 1547729944,
+//         MMR: 2324,
+//         EnemyMMR: 2351,
+//     },
+//   ];
+
+//   const data = [
+//     {
+//       id: "MMR",
+//       data: [
+//         {
+//           timestamp: 1547732654,
+//           MMR: 2240
+//         },
+//         {
+//           timestamp: 1547732359,
+//           MMR: 2282
+//         },
+//         {
+//           timestamp: 1547731914,
+//           MMR: 2308
+//         },
+//         {
+//           timestamp: 1547731552,
+//           MMR: 2275
+//         },
+//         {
+//           timestamp: 1547731346,
+//           MMR: 2244
+//         },
+//         {
+//           timestamp: 1547731100,
+//           MMR: 2277
+//         }
+//       ]
+//     },
+//     {
+//         id: "EnemyMMR",
+//         data: [
+//           {
+//             timestamp: 1547732654,
+//             EnemyMMR: 2262
+//           },
+//           {
+//             timestamp: 1547732359,
+//             EnemyMMR: 2220
+//           },
+//           {
+//             timestamp: 1547731914,
+//             EnemyMMR: 2326
+//           },
+//           {
+//             timestamp: 1547731552,
+//             EnemyMMR: 2294
+//           },
+//           {
+//             timestamp: 1547731346,
+//             EnemyMMR: 2252
+//           },
+//           {
+//             timestamp: 1547731100,
+//             EnemyMMR: 2258
+//           }
+//         ]
+//       },
+//   ];
 
 const data = [
-    {
-        timestamp: 1547732654,
-        MMR: 2240,
-        EnemyMMR: 2262,
-    },
-    {
-        timestamp: 1547732359,
-        MMR: 2282,
-        EnemyMMR: 2220,
-    },
-    {
-        timestamp: 1547731914,
-        MMR: 2308,
-        EnemyMMR: 2326,
-    },
-    {
-        timestamp: 1547731552,
-        MMR: 2275,
-        EnemyMMR: 2294,
-    },
-    {
-        timestamp: 1547731346,
-        MMR: 2244,
-        EnemyMMR: 2252,
-    },
-    {
-        timestamp: 1547731100,
-        MMR: 2277,
-        EnemyMMR: 2258,
-    },
-    {
-        timestamp: 1547730927,
-        MMR: 2307,
-        EnemyMMR: 2303,
-    },
-    {
-        timestamp: 1547730735,
-        MMR: 2330,
-        EnemyMMR: 2360,
-    },
-    {
-        timestamp: 1547730424,
-        MMR: 2300,
-        EnemyMMR: 2305,
-    },
-    {
-        timestamp: 1547729944,
-        MMR: 2324,
-        EnemyMMR: 2351,
-    },
-  ];
+        {
+          id: "MMR",
+          data: [
+            {
+              x: 1547732654,
+              y: 2240
+            },
+            {
+              x: 1547732359,
+              y: 2282
+            },
+            {
+              x: 1547731914,
+              y: 2308
+            },
+            {
+              x: 1547731552,
+              y: 2275
+            },
+            {
+              x: 1547731346,
+              y: 2244
+            },
+            {
+              x: 1547731100,
+              y: 2277
+            }
+          ]
+        },
+        {
+            id: "Enemy MMR",
+            data: [
+              {
+                x: 1547732654,
+                y: 2262
+              },
+              {
+                x: 1547732359,
+                y: 2220
+              },
+              {
+                x: 1547731914,
+                y: 2326
+              },
+              {
+                x: 1547731552,
+                y: 2294
+              },
+              {
+                x: 1547731346,
+                y: 2252
+              },
+              {
+                x: 1547731100,
+                y: 2258
+              }
+            ]
+          },
+      ];
+
 // make sure parent container have a defined height when using responsive component,
 // otherwise height will be 0 and no chart will be rendered.
 // website examples showcase many properties, you'll often use just a few of them.
 const MMRLine = (props) => {
+    console.log(`MMR Line Props:`);
+    // console.log(props.data.data);
     return(
-        <div>
-            <ResponsiveLine
+        <div style={styles}>
+            <Line
                 data={data}
-                margin={{
-                    "top": 50,
-                    "right": 110,
-                    "bottom": 50,
-                    "left": 60
-                }}
-                xScale={{
-                    "type": "point"
-                }}
-                yScale={{
-                    "type": "linear",
-                    "stacked": true,
-                    "min": "auto",
-                    "max": "auto"
-                }}
-                axisTop={null}
-                axisRight={null}
+                width={600}
+                height={400}
+                margin={{ top: 60, right: 80, bottom: 60, left: 80 }}
+                // axisBottom={{
+                //   orient: "bottom",
+                //   tickSize: 0,
+                //   tickPadding: 10,
+                //   tickRotation: 0,
+                //   tickValues: [1.1, 2.1, 3.5, 5.5]
+                // }}
                 axisBottom={{
                     "orient": "bottom",
                     "tickSize": 5,
@@ -88,51 +210,14 @@ const MMRLine = (props) => {
                     "legendOffset": 36,
                     "legendPosition": "middle"
                 }}
-                axisLeft={{
-                    "orient": "left",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legend": "count",
-                    "legendOffset": -40,
-                    "legendPosition": "middle"
+                xScale={{
+                    "type": "point"
                 }}
-                dotSize={10}
-                dotColor="inherit:darker(0.3)"
-                dotBorderWidth={2}
-                dotBorderColor="#ffffff"
-                enableDotLabel={true}
-                dotLabel="y"
-                dotLabelYOffset={-12}
-                animate={true}
-                motionStiffness={90}
-                motionDamping={15}
-                legends={[
-                    {
-                        "anchor": "bottom-right",
-                        "direction": "column",
-                        "justify": false,
-                        "translateX": 100,
-                        "translateY": 0,
-                        "itemsSpacing": 0,
-                        "itemDirection": "left-to-right",
-                        "itemWidth": 80,
-                        "itemHeight": 20,
-                        "itemOpacity": 0.75,
-                        "symbolSize": 12,
-                        "symbolShape": "circle",
-                        "symbolBorderColor": "rgba(0, 0, 0, .5)",
-                        "effects": [
-                            {
-                                "on": "hover",
-                                "style": {
-                                    "itemBackground": "rgba(0, 0, 0, .03)",
-                                    "itemOpacity": 1
-                                }
-                            }
-                        ]
-                    }
-                ]}
+                yScale={{
+                    "type": "linear",
+                    "min": "auto",
+                    "max": "auto"
+                }}
             />
         </div>
     )
