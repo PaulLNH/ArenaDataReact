@@ -56,7 +56,8 @@ const legends = [
 ];
 
 const DivergingStacked = (props) => {
-
+    console.log(`DivergingStackedProps:`);
+    console.log(props);
     return (
         <Bar
             width={600}

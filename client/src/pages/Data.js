@@ -5,6 +5,7 @@ import DivergingStacked from '../components/charts/bar/divergingStacked';
 import MMRLine from '../components/charts/line/MMRLine';
 import { Typography } from '@material-ui/core';
 import ImportBtn from '../components/ImportBtn';
+import GameStatsTable from '../components/GameStatsTable';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ReactSpeedometer from 'react-d3-speedometer';
@@ -50,7 +51,13 @@ const styles = theme => ({
   App: {
     position: 'relative',
     height: '400px',
-    }
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    height: '100%',
+  },
 });
 
 class Data extends Component {
@@ -64,11 +71,18 @@ class Data extends Component {
             divergingMapLoading: true,
             MMRLineData: [],
             MMRLineLoading: true,
+            currentMMR: undefined,
+            GameStatsTable: {
+                maxMMR: undefined,
+                minMMR: undefined,
+                total: undefined,
+                wins: undefined,
+                losses: undefined,
+            }
         };
     };
 
     async componentWillMount() {
-        // this.setState({ divergingMapLoading: true });
         console.log(`======================= Data.js =======================`);
         console.log(`ID is set to ${this.state.clientID}`);
         await this.getDivergingMapData(this.state.clientID);
@@ -86,7 +100,19 @@ class Data extends Component {
                 console.log(`mapdata - API Response:`);
                 console.log(res.data);
                 if (res.data.success) {
-                    this.setState({ divergingMapData: res.data, divergingMapLoading: false });
+                    let total = res.data.total;
+                    let wins = res.data.wins;
+                    let losses = res.data.losses;
+                    this.setState(prevState => ({ 
+                        GameStatsTable: {
+                            ...prevState.GameStatsTable,
+                            total: total,
+                            wins: wins,
+                            losses: losses,
+                        },
+                        divergingMapData: res.data, 
+                        divergingMapLoading: false, 
+                    }));
                 }
         });
     };
@@ -102,14 +128,35 @@ class Data extends Component {
                 console.log(`mmrdata - API Response:`);
                 console.log(res.data);
                 if (res.data.success) {
-                    this.setState({ MMRLineData: res.data, MMRLineLoading: false });
+                    let games = res.data.data[0].data;
+                    let currentMMR = res.data.data[0].data[res.data.data[0].data.length - 1].y;
+                    let maxMMR = 0;
+                    let minMMR = 0;
+                    for (let i = 0; i < games.length; i++ ) {
+                        if (res.data.data[0].data[i].y > maxMMR) {
+                            maxMMR = res.data.data[0].data[i].y;
+                        } 
+                        if (res.data.data[0].data[i].y < minMMR || minMMR === 0) {
+                            minMMR = res.data.data[0].data[i].y;
+                        }
+                    }
+                    this.setState(prevState => ({ 
+                        GameStatsTable: {
+                            ...prevState.GameStatsTable,
+                            maxMMR: maxMMR,
+                            minMMR: minMMR,
+                        },
+                        MMRLineData: res.data, 
+                        MMRLineLoading: false,
+                        currentMMR: currentMMR,
+                    }));
                 }
         });
     };
 
     render() {
         const { classes, id } = this.props;
-        console.log(id);
+
         return (
             <div>
             {id ? (
@@ -120,20 +167,42 @@ class Data extends Component {
                     alignItems="center"
                     justify="center"
                 >
-                    <div style={{ width: '100vw', display: 'flex', justifyContent: 'center'}} >
-                        <ReactSpeedometer 
-                            height={200}
-                            width={300}
-                            value={2423}
-                            minValue={1500}
-                            maxValue={2800}
-                            segments={5}
-                            startColor={'green'}
-                            endColor={'#d43c3c'}
-                            textColor={'#ffffff'}
-                            needleTransition={"easeElastic"}
-                            needleTransitionDuration={4000}
-                        />
+                    <div style={{ width: '100vw', display: 'flex', padding: '10px 5%'}} >
+
+
+                        <Grid
+                        container
+                        spacing={16}
+                        direction="row"
+                        alignItems="center"
+                        justify="center"
+                        >
+                            <Grid item md={2}></Grid>
+
+                            <Grid item item xs={12} sm={12} md={3}>
+                                <div style={{ margin: '0 20px'}} >
+                                    <ReactSpeedometer 
+                                        height={200}
+                                        width={300}
+                                        value={parseInt(this.state.currentMMR)}
+                                        minValue={1400}
+                                        maxValue={2800}
+                                        segments={8}
+                                        startColor={'green'}
+                                        endColor={'#d43c3c'}
+                                        textColor={'#ffffff'}
+                                        needleTransition={"easeElastic"}
+                                        needleTransitionDuration={4000}
+                                    />
+                                </div>
+
+                            </Grid>
+                            <Grid item item xs={12} sm={12} md={5} >
+                                <GameStatsTable data={this.state.GameStatsTable} />
+                            </Grid>
+
+                            <Grid item md={2}></Grid>
+                        </Grid>
                     </div>
 
                 <div>
