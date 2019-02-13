@@ -12,6 +12,8 @@
     "nivo": "^0.31.0",
     "papaparse": "^4.6.3",
     "react": "^16.7.0",
+    "react-d3-speedometer": "^0.4.2",
+    "react-dev-utils": "^7.0.3",
     "react-dom": "^16.7.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",

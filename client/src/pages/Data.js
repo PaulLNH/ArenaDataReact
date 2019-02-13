@@ -7,6 +7,7 @@ import { Typography } from '@material-ui/core';
 import ImportBtn from '../components/ImportBtn';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ReactSpeedometer from 'react-d3-speedometer';
 
 const styles = theme => ({
   root: {
@@ -112,7 +113,6 @@ class Data extends Component {
         return (
             <div>
             {id ? (
-
                 <Grid
                     container
                     spacing={16}
@@ -120,6 +120,21 @@ class Data extends Component {
                     alignItems="center"
                     justify="center"
                 >
+                    <div style={{ width: '100vw', display: 'flex', justifyContent: 'center'}} >
+                        <ReactSpeedometer 
+                            height={200}
+                            width={300}
+                            value={2423}
+                            minValue={1500}
+                            maxValue={2800}
+                            segments={5}
+                            startColor={'green'}
+                            endColor={'#d43c3c'}
+                            textColor={'#ffffff'}
+                            needleTransition={"easeElastic"}
+                            needleTransitionDuration={4000}
+                        />
+                    </div>
 
                 <div>
                     <div className={classes.root} >
