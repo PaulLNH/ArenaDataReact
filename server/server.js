@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const Arena = require('./data');
+const fs = require('fs');
 require("dotenv").config();
 
 const API_PORT = 3001;
@@ -54,6 +55,21 @@ app.use(logger("dev"));
 // Enable CORS on all routes
 app.use(cors());
 
+// Logging function
+function logEvent(file="log.txt", data, _callback=null) {
+    if (!_callback) {
+      // default callback function if not passed in
+      _callback = function(err) {
+        if (err) {
+          return console.log(err);
+        }
+      };
+    }
+    console.log(`Updated log entry:`);
+    console.log(data);
+    return fs.appendFile(file, ", " + data, _callback);
+  }
+
 
 // TODO: Race condition between findByIdAndRemove and findOneAndUpdate. Possibly nest these calls?
 // Primary route, creates a new document if none exists, updates document if one
@@ -63,17 +79,21 @@ router.put('/import', async (req, res) => {
         id,
         games
     } = req.body;
+    const ip = req.ip;
+    const ipDepth = req.ips;
     console.log(`req.body.id: ${id}`);
     console.log(`req.body.games:`);
     console.log(games);
-
-
+    
+    
     const query = await id ? {
         _id: id
     } : {
         _id: new mongoose.mongo.ObjectID()
     };
     console.log(`Searching on query: ${JSON.stringify(query)}`);
+    
+    const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/import/' client ID: ${query._id}`;
 
     const options = {
         upsert: true,
@@ -100,6 +120,7 @@ router.put('/import', async (req, res) => {
                 error: err
             });
             console.log(`Document ${query._id} reset to newest import.`);
+            logEvent(log);
             return res.json({
                 success: true,
                 _id: doc._id,
