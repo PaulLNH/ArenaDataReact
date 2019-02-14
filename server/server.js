@@ -58,7 +58,7 @@ app.use(cors());
 // TODO: Race condition between findByIdAndRemove and findOneAndUpdate. Possibly nest these calls?
 // Primary route, creates a new document if none exists, updates document if one
 router.put('/import', async (req, res) => {
-    console.log(`import endpoint hit, parsing request...`);
+    console.log(`import endpoint hit from ip: ${req.ip}, parsing request...`);
     const {
         id,
         games
@@ -110,7 +110,7 @@ router.put('/import', async (req, res) => {
 });
 
 router.get('/games', async (req, res) => {
-    console.log(`games endpoint hit, parsing request...`);
+    console.log(`games endpoint hit from ip: ${req.ip}, parsing request...`);
     const {
         id
     } = req.query;
@@ -137,7 +137,7 @@ router.get('/games', async (req, res) => {
 });
 
 router.get('/mapdata', async (req, res) => {
-    console.log(`mapdata endpoint hit, processing request...`);
+    console.log(`mapdata endpoint hit from ip: ${req.ip}, processing request...`);
     const {
         id
     } = req.query || req.body;
@@ -336,7 +336,7 @@ router.get('/mapdata', async (req, res) => {
 
 
 router.get('/mmrdata', async (req, res) => {
-    console.log(`mmrdata endpoint hit, processing request...`);
+    console.log(`mmrdata endpoint hit from ip: ${req.ip}, processing request...`);
     const { id } = req.query || req.body;
     console.log(`id: ${id}`);
 

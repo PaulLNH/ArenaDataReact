@@ -72,6 +72,7 @@ class Data extends Component {
             MMRLineData: [],
             MMRLineLoading: true,
             currentMMR: undefined,
+            currentMMRLoading: true,
             GameStatsTable: {
                 maxMMR: undefined,
                 minMMR: undefined,
@@ -149,6 +150,7 @@ class Data extends Component {
                         MMRLineData: res.data, 
                         MMRLineLoading: false,
                         currentMMR: currentMMR,
+                        currentMMRLoading: false,
                     }));
                 }
         });
@@ -179,7 +181,16 @@ class Data extends Component {
                         >
                             <Grid item md={2}></Grid>
 
-                            <Grid item item xs={12} sm={12} md={3}>
+                            <Grid item xs={12} sm={12} md={3}>
+
+                            {this.state.currentMMRLoading ? (
+                                <div style={{position: 'relative'}} >
+                                    <Typography variant="h1" className={classes.chartTitle} >Loading Data...</Typography>
+                                    <br />
+                                    <CircularProgress className={classes.progress} />
+                                </div>
+                            )
+                            : 
                                 <div style={{ margin: '0 20px'}} >
                                     <ReactSpeedometer 
                                         height={200}
@@ -195,9 +206,13 @@ class Data extends Component {
                                         needleTransitionDuration={4000}
                                     />
                                 </div>
+                            }
+
+
+
 
                             </Grid>
-                            <Grid item item xs={12} sm={12} md={5} >
+                            <Grid item xs={12} sm={12} md={5} >
                                 <GameStatsTable data={this.state.GameStatsTable} />
                             </Grid>
 
