@@ -2,18 +2,25 @@ const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
-const logger = require('morgan');
+const morgan = require('morgan');
+const path = require('path');
 const cors = require('cors');
 const Arena = require('./data');
-const fs = require('fs');
 require("dotenv").config();
 
 const API_PORT = 3001;
 const app = express();
 const router = express.Router();
 
+// create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 // The line below allows us to import large data chunks in our API
+
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
+
 app.use(bodyParser.json({
     limit: '50mb'
 }));
@@ -50,13 +57,12 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(bodyParser.json());
-// uses morgan for logging
-app.use(logger("dev"));
+
 // Enable CORS on all routes
 app.use(cors());
 
 // Logging function
-function logEvent(file="log.txt", data, _callback=null) {
+function logEvent(data, file="log.txt", _callback=null) {
     if (!_callback) {
       // default callback function if not passed in
       _callback = function(err) {
@@ -67,7 +73,7 @@ function logEvent(file="log.txt", data, _callback=null) {
     }
     console.log(`Updated log entry:`);
     console.log(data);
-    return fs.appendFile(file, ", " + data, _callback);
+    return fs.appendFile(file, `${Date.now()}: ${data},\n`, _callback);
   }
 
 
@@ -93,7 +99,7 @@ router.put('/import', async (req, res) => {
     };
     console.log(`Searching on query: ${JSON.stringify(query)}`);
     
-    const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/import/' client ID: ${query._id}`;
+
 
     const options = {
         upsert: true,
@@ -115,12 +121,13 @@ router.put('/import', async (req, res) => {
         options,
         function (err, doc) {
             // console.log(doc);
+            const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/import/' client ID: ${query._id} Success: `;
+            logEvent(log);
             if (err) return res.json({
                 success: false,
                 error: err
             });
             console.log(`Document ${query._id} reset to newest import.`);
-            logEvent(log);
             return res.json({
                 success: true,
                 _id: doc._id,
@@ -136,13 +143,9 @@ router.get('/games', async (req, res) => {
         id
     } = req.query;
     console.log(`id: ${id}`);
-    // console.log(`Request Body:`);
-    // console.log(req.query.id);
-    // const query = await { _id: id };
-    // console.log(`Retreving game data for ${query._id}`);
-
-    // let update = {$set : {games: games}};
-    // console.log(`Pushing to DB under ID: ${query._id}: ${JSON.stringify(update)}`);
+    const ip = req.ip;
+    const ipDepth = req.ips;
+    const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/games/' client ID: ${id}`;
 
     Arena.findById(id, function (err, doc) {
         if (err) return res.json({
@@ -150,6 +153,7 @@ router.get('/games', async (req, res) => {
             error: err
         });
         console.log(`Sending document ${id} to client.`);
+        logEvent(log);
         return res.json({
             success: true,
             data: doc,
@@ -163,6 +167,10 @@ router.get('/mapdata', async (req, res) => {
         id
     } = req.query || req.body;
     console.log(`id: ${id}`);
+
+    const ip = req.ip;
+    const ipDepth = req.ips;
+    const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/mapdata/' client ID: ${id}`;
 
     Arena.findById(id, function (err, doc) {
         if (err) return res.json({
@@ -334,7 +342,7 @@ router.get('/mapdata', async (req, res) => {
         console.log(HP);
         console.log(`M:`);
         console.log(M);
-
+        logEvent(log);
 
         return res.json({
             success: true,
@@ -360,6 +368,10 @@ router.get('/mmrdata', async (req, res) => {
     console.log(`mmrdata endpoint hit from ip: ${req.ip}, processing request...`);
     const { id } = req.query || req.body;
     console.log(`id: ${id}`);
+
+    const ip = req.ip;
+    const ipDepth = req.ips;
+    const log = `requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/mmrdata/' client ID: ${id}`;
 
     Arena.findById(id, function (err, doc) {
         if (err) return res.json({
@@ -391,7 +403,7 @@ router.get('/mmrdata', async (req, res) => {
         console.log(JSON.stringify(data));
         data[0].data.reverse();
         data[1].data.reverse();
-
+        logEvent(log);
         return res.json({
             success: true,
             data: data,
