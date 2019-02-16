@@ -61,6 +61,9 @@ app.use(bodyParser.json());
 // Enable CORS on all routes
 app.use(cors());
 
+// append /api for our http requests
+app.use('/api', router);
+
 // Logging function
 function logEvent(data, file="log.txt", _callback=null) {
     if (!_callback) {
@@ -76,8 +79,6 @@ function logEvent(data, file="log.txt", _callback=null) {
     return fs.appendFile(file, `${Date.now()}: ${data},\n`, _callback);
   }
 
-
-// TODO: Race condition between findByIdAndRemove and findOneAndUpdate. Possibly nest these calls?
 // Primary route, creates a new document if none exists, updates document if one
 router.put('/import', async (req, res) => {
     console.log(`import endpoint hit from ip: ${req.ip}, parsing request...`);
@@ -91,7 +92,6 @@ router.put('/import', async (req, res) => {
     console.log(`req.body.games:`);
     console.log(games);
     
-    
     const query = await id ? {
         _id: id
     } : {
@@ -99,8 +99,6 @@ router.put('/import', async (req, res) => {
     };
     console.log(`Searching on query: ${JSON.stringify(query)}`);
     
-
-
     const options = {
         upsert: true,
         new: true,
@@ -430,8 +428,79 @@ router.get('/mmrdata', async (req, res) => {
 //       ]
 // },
 
-// append /api for our http requests
-app.use('/api', router);
+router.get('/comp', async (req, res) => {
+    console.log(`comp endpoint hit from ip: ${req.ip}, processing request...`);
+    const { id } = req.query || req.body;
+    console.log(`id: ${id}`);
+
+    const ip = req.ip;
+    const ipDepth = req.ips;
+    const log = `${Date.now()}: requesting ip: ${ip}, ip trace: ${ipDepth} API Endpoint '/api/mmrdata/' client ID: ${id}`;
+
+
+    // TODO: Make this API route work by building a data payload which contains the example dataset below outlined in comments.
+    Arena.findById(id, function (err, doc) {
+        logEvent(log);
+        if (err) return res.json({
+            success: false,
+            error: err
+        });
+        // Create data array to hold the team comp info
+        let data = [];
+
+        // EXAMPLE DATASET
+        // data = [
+        //     {
+        //         team: "MAGE-Frost,PRIEST-Discipline,ROGUE-Assassination",
+        //         vs: [
+        //             {
+        //                 composition: "MONK-Windwalker,PALADIN-Holy,WARRIOR-Fury",
+        //                 wins: 2,
+        //                 loss: 0,
+        //             },
+        //         ]
+        //     }
+        // ]
+
+        // Loop through all games
+        doc.games.forEach(game => {
+            let match = false;
+            let comp = {
+                team: game.TeamComposition,
+                vs: []
+            };
+
+            let enemy = {
+                composition: game.EnemyComposition,
+                wins: 0,
+                loss: 0,
+            };
+
+            for (let i = 0; i < comp.vs.length; i++) {
+                if (comp.vs[i].composition === game.EnemyComposition && game.Victory) {
+                    console.log(`your team won vs ${game.EnemyComposition}`);
+                    comp.vs[i].wins++;
+                    break
+                } else if (comp.vs[i].composition === game.EnemyComposition && !game.Victory) {
+                    console.log(`your team loss vs ${game.EnemyComposition}`);
+                    comp.vs[i].loss++;
+                    break
+                } else {
+                    console.log(`adding ${game.EnemyComposition} to the comp.vs array`);
+                    comp.vs.push(enemy);
+                    break
+                }
+            };
+
+            data.push(comp);
+        });
+
+        return res.json({
+            success: true,
+            data: data,
+        });
+    });
+});
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`Server listening on port ${API_PORT}`));

@@ -8,3 +8,6 @@
 1550278874666: requesting ip: ::1, ip trace:  API Endpoint '/api/games/' client ID: 5c5ce2cb1f8857211c6acd18,
 1550278876513: requesting ip: ::1, ip trace:  API Endpoint '/api/mmrdata/' client ID: 5c5ce2cb1f8857211c6acd18,
 1550278876523: requesting ip: ::1, ip trace:  API Endpoint '/api/mapdata/' client ID: 5c5ce2cb1f8857211c6acd18,
+1550330320246: requesting ip: ::1, ip trace:  API Endpoint '/api/games/' client ID: 5c64ba1e5ed5cd1860aa44cc,
+1550330339775: requesting ip: ::1, ip trace:  API Endpoint '/api/import/' client ID: 5c64ba1e5ed5cd1860aa44cc Success: ,
+1550330339843: requesting ip: ::1, ip trace:  API Endpoint '/api/games/' client ID: 5c64ba1e5ed5cd1860aa44cc,
