@@ -204,100 +204,55 @@ class Match extends React.Component {
   return result
 };
 
-displayMapName = (map, key, classes) => {
-    switch (map.toString()) {
-        case '572':
-            // code for RoL
-            // win ? mapWL.RoL.win++ : mapWL.RoL.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name:`Ruins of Lordaeron`, initials: `RoL`}
-        case '617':
-            // code for DS
-            // win ? mapWL.DS.win++ : mapWL.DS.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name:`Dalaran Sewers`, initials: `DS`}
-        case '980':
-            // code for TA
-            // win ? mapWL.TA.win++ : mapWL.TA.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name:`Tol'Viron Arena`, initials: `TA`}
-        case '1134':
-            // code for TTP
-            // win ? mapWL.TTP.win++ : mapWL.TTP.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Tiger's Peak`, initials: `TP`}
-        case '1504':
-            // code for BRHA
-            // win ? mapWL.BRHA.win++ : mapWL.BRHA.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Black Rook Hold`, initials: `BRH`}
-        case '1505':
-            // code for NA
-            // win ? mapWL.NA.win++ : mapWL.NA.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Nagrand Arena`, initials: `NA`}
-        case '1552':
-            // code for AF
-            // win ? mapWL.AF.win++ : mapWL.AF.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Ashamane's Fall`, initials: `AF`}
-        case '1672':
-            // code for BEA
-            // win ? mapWL.BEA.win++ : mapWL.BEA.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Blades Edge Arena`, initials: `BEA`}
-        case '1825':
-            // code for HP
-            // win ? mapWL.HP.win++ : mapWL.HP.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Hook Poin`, initials: `HP`}
-        case '1911':
-            // code for M
-            // win ? mapWL.M.win++ : mapWL.M.loss++
-            // win ? mapWL.game.win++ : mapWL.game.loss++
-            return {name: `Mugambala`, initials: `M`}
-        default:
-        return {name: `No Map Found :(`, initials: `SOL`}
-    }
-};
-
-displayMapImage = (map) => {
-    switch (map.toString()) {
-        case '572':
-            // code for RoL
-            return {src: 'RoL'};
-        case '617':
-            // code for DS
-            return {src: 'DS'};
-        case '980':
-            // code for TA
-            return {src: 'TA'};
-        case '1134':
-            // code for TTP
-            return {src: 'TP'};
-        case '1504':
-            // code for BRHA
-            return {src: 'BRH'};
-        case '1505':
-            // code for NA
-            return {src: 'NA'};
-        case '1552':
-            // code for AF
-            return {src: 'AF'};
-        case '1672':
-            // code for BEA
-            return {src: 'BEA'};
-        case '1825':
-            // code for HP
-            return {src: 'HP'};
-        case '1911':
-            // code for M
-            return {src: 'M'};
-        default:
-            console.error(`ENTERED DEFAULT MAP IMAGE CASE.`);
-            return {src: 'M'};
-    }
-};
+displayMapName = (map) => {
+    const maps = {
+        572: {
+            name:`Ruins of Lordaeron`, 
+            initials: `RoL`
+        },
+        617: {
+            name:`Dalaran Sewers`, 
+            initials: `DS`
+        },
+        980: {
+            name:`Tol'Viron Arena`, 
+            initials: `TA`
+        },
+        1134: {
+            name: `Tiger's Peak`, 
+            initials: `TP`
+        },
+        1504: {
+            name: `Black Rook Hold`, 
+            initials: `BRH`
+        },
+        1505: {
+            name: `Nagrand Arena`, 
+            initials: `NA`
+        },
+        1552: {
+            name: `Ashamane's Fall`, 
+            initials: `AF`
+        },
+        1672: {
+            name: `Blades Edge Arena`, 
+            initials: `BEA`
+        },
+        1825: {
+            name: `Hook Poin`, 
+            initials: `HP`
+        },
+        1911: {
+            name: `Mugambala`, 
+            initials: `M`
+        },
+        'default': {
+            name: `No Map Found :(`, 
+            initials: `SOL`
+        },
+    };
+    return (maps[map] || maps['default']);
+}
 
 // DATA FROM PROPS:
 // Damage: 364332
@@ -446,7 +401,7 @@ displayMapImage = (map) => {
                             <Grid item xs={2} sm={2} md={2} container >
                                 <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
                                 <span>
-                                <img src={mapImages[this.displayMapImage(match.Map).src]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
+                                <img src={mapImages[this.displayMapName(match.Map).initials]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
                                 &nbsp;
                                 </span>
                                 </Tooltip>
