@@ -204,7 +204,8 @@ class Match extends React.Component {
   return result
 };
 
-displayMapName = (map) => {
+// Object literal to replace long switch statement.
+displayMap = (map) => {
     const maps = {
         572: {
             name:`Ruins of Lordaeron`, 
@@ -323,9 +324,9 @@ displayMapName = (map) => {
                         BEA
                     */}
                     <Grid item xs={1} sm={1} md={1}>
-                        <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                        <Tooltip title={`${this.displayMap(match.Map).name}`} aria-label={`${this.displayMap(match.Map).name}`}>
                             <Typography className={classes.secondaryHeading}>
-                                {this.displayMapName(match.Map).initials}
+                                {this.displayMap(match.Map).initials}
                             </Typography>
                         </Tooltip>
                     </Grid>
@@ -399,9 +400,9 @@ displayMapName = (map) => {
                                 (image)
                             */}
                             <Grid item xs={2} sm={2} md={2} container >
-                                <Tooltip title={`${this.displayMapName(match.Map).name}`} aria-label={`${this.displayMapName(match.Map).name}`}>
+                                <Tooltip title={`${this.displayMap(match.Map).name}`} aria-label={`${this.displayMap(match.Map).name}`}>
                                 <span>
-                                <img src={mapImages[this.displayMapName(match.Map).initials]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMapName(match.Map).name}`}/>
+                                <img src={mapImages[this.displayMap(match.Map).initials]} className={classes.mapImages} key={`${match.Timestamp}-${match.Map}`} alt={`${this.displayMap(match.Map).name}`}/>
                                 &nbsp;
                                 </span>
                                 </Tooltip>

@@ -462,38 +462,108 @@ router.get('/comp', async (req, res) => {
         //     }
         // ]
 
-        // Loop through all games
+        // Loop through each game
         doc.games.forEach(game => {
-            let match = false;
-            let comp = {
-                team: game.TeamComposition,
-                vs: []
+            // Destruct the game object and expose only the variables we need
+            const { TeamComposition, EnemyComposition, Victory } = game;
+            // Create a new TeamComposition template
+            let gameTemplate = {
+                TeamComposition: TeamComposition,
+                vs: [
+                    {
+                        EnemyComposition: EnemyComposition,
+                        wins: 0,
+                        loss: 0,
+                    }
+                ],
             };
 
-            let enemy = {
-                composition: game.EnemyComposition,
-                wins: 0,
-                loss: 0,
-            };
+            // Check to see if the TeamComposition already exists in the data array
+            data.forEach(index => {
+                // If the team exists in the object
+                if (TeamComposition in index) {
+                    // Loop through the enemy team array
+                    index.vs.forEach(vs => {
+                        // If the enemy team exists in the array
+                        if (EnemyComposition in vs) {
+                            // Check if the match was a victory
+                            if (Victory) {
+                                // increment wins
+                                console.log(`Victory! ${TeamComposition} vs ${EnemyComposition}`);
+                                vs.wins++;
+                            // Check if the match was a defeat
+                            } else if (!Victory) {
+                                // increment loss
+                                console.log(`Defeat! ${TeamComposition} vs ${EnemyComposition}`);
+                                vs.loss++;
+                            };
 
-            for (let i = 0; i < comp.vs.length; i++) {
-                if (comp.vs[i].composition === game.EnemyComposition && game.Victory) {
-                    console.log(`your team won vs ${game.EnemyComposition}`);
-                    comp.vs[i].wins++;
-                    break
-                } else if (comp.vs[i].composition === game.EnemyComposition && !game.Victory) {
-                    console.log(`your team loss vs ${game.EnemyComposition}`);
-                    comp.vs[i].loss++;
-                    break
+                        // If the enemy team does not exist in the array
+                        } else {
+                            // Incrment wins or loss accordingly
+                            if (Victory) {
+                                gameTemplate.vs[0].wins++;
+                            } else {
+                                gameTemplate.vs[0].loss++;
+                            }
+                            // Log data for testing
+                            console.log(`Pushing new EnemyComposition to payload:`);
+                            console.log(vs[0]);
+                            vs.push(gameTemplate.vs[0]);
+                        };
+                    });
+
+                // If the team doesn't exist in the object
                 } else {
-                    console.log(`adding ${game.EnemyComposition} to the comp.vs array`);
-                    comp.vs.push(enemy);
-                    break
+                    // Increment wins or loss accordingly
+                    if (Victory) {
+                        gameTemplate.vs[0].wins++;
+                    } else {
+                        gameTemplate.vs[0].loss++;
+                    }
+                    // Log data for testing
+                    console.log(`Pushing new TeamComposition to payload:`);
+                    console.log(gameTemplate);
+                    // Push the gameTemplate to the data payload
+                    data.push(gameTemplate);
                 }
-            };
-
-            data.push(comp);
+            });
         });
+
+
+
+        // Loop through all games
+        // doc.games.forEach(game => {
+        //     let match = false;
+        //     let comp = {
+        //         team: game.TeamComposition,
+        //         vs: []
+        //     };
+
+        //     let enemy = {
+        //         composition: game.EnemyComposition,
+        //         wins: 0,
+        //         loss: 0,
+        //     };
+
+        //     for (let i = 0; i < comp.vs.length; i++) {
+        //         if (comp.vs[i].composition === game.EnemyComposition && game.Victory) {
+        //             console.log(`your team won vs ${game.EnemyComposition}`);
+        //             comp.vs[i].wins++;
+        //             break
+        //         } else if (comp.vs[i].composition === game.EnemyComposition && !game.Victory) {
+        //             console.log(`your team loss vs ${game.EnemyComposition}`);
+        //             comp.vs[i].loss++;
+        //             break
+        //         } else {
+        //             console.log(`adding ${game.EnemyComposition} to the comp.vs array`);
+        //             comp.vs.push(enemy);
+        //             break
+        //         }
+        //     };
+
+        //     data.push(comp);
+        // });
 
         return res.json({
             success: true,
