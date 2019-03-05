@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/788d51b1-62c9-444f-bcbf-14f228d4b33a/deploy-status)](https://app.netlify.com/sites/arenadata/deploys)
+
 # Arena Data
 
 This is a community project focused on data visualization which utilizes the REFlex addon [REFlex - Arena/Battleground Historian](https://wow.curseforge.com/projects/reflex-battleground-historian) that provides a CSV dump of previous arena matches allowing users to paste that data into the Arena Data website and rendering beautiful visualizations representing their progress.
