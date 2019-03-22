@@ -1,0 +1,5 @@
+::1 - - [05/Mar/2019:16:07:57 +0000] "GET /api/games?id=5c5ce2cb1f8857211c6acd18 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"
+::ffff:127.0.0.1 - - [05/Mar/2019:16:07:59 +0000] "GET /robots.txt HTTP/1.1" 404 149 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"
+::1 - - [05/Mar/2019:16:08:12 +0000] "GET /api/mapdata?id=5c5ce2cb1f8857211c6acd18 HTTP/1.1" 304 - "http://localhost:3000/data" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"
+::1 - - [05/Mar/2019:16:08:12 +0000] "GET /api/mmrdata?id=5c5ce2cb1f8857211c6acd18 HTTP/1.1" 304 - "http://localhost:3000/data" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"
+::1 - - [05/Mar/2019:16:08:19 +0000] "GET /api/games?id=5c5ce2cb1f8857211c6acd18 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"

@@ -530,47 +530,22 @@ router.get('/comp', async (req, res) => {
             });
         });
 
-
-
-        // Loop through all games
-        // doc.games.forEach(game => {
-        //     let match = false;
-        //     let comp = {
-        //         team: game.TeamComposition,
-        //         vs: []
-        //     };
-
-        //     let enemy = {
-        //         composition: game.EnemyComposition,
-        //         wins: 0,
-        //         loss: 0,
-        //     };
-
-        //     for (let i = 0; i < comp.vs.length; i++) {
-        //         if (comp.vs[i].composition === game.EnemyComposition && game.Victory) {
-        //             console.log(`your team won vs ${game.EnemyComposition}`);
-        //             comp.vs[i].wins++;
-        //             break
-        //         } else if (comp.vs[i].composition === game.EnemyComposition && !game.Victory) {
-        //             console.log(`your team loss vs ${game.EnemyComposition}`);
-        //             comp.vs[i].loss++;
-        //             break
-        //         } else {
-        //             console.log(`adding ${game.EnemyComposition} to the comp.vs array`);
-        //             comp.vs.push(enemy);
-        //             break
-        //         }
-        //     };
-
-        //     data.push(comp);
-        // });
-
         return res.json({
             success: true,
             data: data,
         });
     });
 });
+
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  });
+}
 
 // launch our backend into a port
 app.listen(API_PORT, () => console.log(`Server listening on port ${API_PORT}`));
